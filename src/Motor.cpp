@@ -2,51 +2,34 @@
 #include "Motor.h"
 
 //---------- CONSTRUCTOR ----------//
-Motor::Motor(){
-
+Motor::Motor(uint8_t pol1, uint8_t pol2){
+    this->_pol1 = pol1;
+    this->_pol2 = pol2;
 };
 
 // ---------- PIN SETUP ----------
-void Motor::MotorInit(){
-    // MOTOR 1
-    pinMode(IN1, OUTPUT);
-    pinMode(IN2, OUTPUT);
-    // MOTOR 2
-    pinMode(IN3, OUTPUT);
-    pinMode(IN4, OUTPUT);
+void Motor::init(){
+    pinMode(_pol1, OUTPUT);
+    pinMode(_pol2, OUTPUT);
 
-    // AVOIDS UNWANTED MOVEMENT ON STARTUP
-    Brake();
+    // AVOIDS MOVEMENT ON INIT
+    Stop();
 
     delay(5000);
 }
 
-// ---------- IMPLEMENTATIONS ----------
-// HELPER FUNCTION
-static void SetPolarities(bool pol1, bool pol2, bool pol3, bool pol4){
-    digitalWrite(IN1, pol1);
-    digitalWrite(IN2, pol2);
-    digitalWrite(IN3, pol3);
-    digitalWrite(IN4, pol4);
+//---------- GENERAL METHODS ----------//
+void Motor::Forward(){
+    digitalWrite(_pol1, HIGH);
+    digitalWrite(_pol2, LOW);
 }
 
-// MAIN FUNCTIONS
-void MoveForward(){
-    return SetPolarities(LOW, HIGH, LOW, HIGH);
+void Motor::Backward(){
+    digitalWrite(_pol1, LOW);
+    digitalWrite(_pol2, HIGH);
 }
 
-void MoveBackward(){
-    return SetPolarities(HIGH, LOW, HIGH, LOW);
-}
-
-void RotateLeft(){
-    return SetPolarities(HIGH, LOW, LOW, HIGH);
-}
-
-void RotateRight(){
-    return SetPolarities(LOW, HIGH, HIGH, LOW);
-}
-
-void Brake(){
-    return SetPolarities(LOW, LOW, LOW, LOW);
+void Motor::Stop(){
+    digitalWrite(_pol1, LOW);
+    digitalWrite(_pol2, LOW);
 }

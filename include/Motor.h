@@ -5,24 +5,21 @@
 
 class Motor {
     private:
-        //---------- HELPER ----------//
-        void SetPolarities(bool pol1, bool pol2, bool pol3, bool pol4);
+        uint8_t _pol1;
+        uint8_t _pol2;
 
     public:
         //---------- CONSTRUCTOR ----------//
-        Motor();
+        Motor(uint8_t pol1, uint8_t pol2);
 
         //---------- PIN SETUP ----------//
         // initializes pin modes
-        void MotorInit();
+        void init();
 
         //---------- GENERAL METHODS ----------//
-        void MoveForward();
-        void MoveBackward();
-        void RotateLeft();
-        void RotateRight();
-        void Brake();
-
+        void Forward();
+        void Backward();
+        void Stop();
 };
 
 #endif
