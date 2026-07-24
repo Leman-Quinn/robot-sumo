@@ -1,8 +1,13 @@
 #include "config.h"
-#include "motors.h"
+#include "Motor.h"
+
+//---------- CONSTRUCTOR ----------//
+Motor::Motor(){
+
+};
 
 // ---------- PIN SETUP ----------
-void MotorsInit(){
+void Motor::MotorInit(){
     // MOTOR 1
     pinMode(IN1, OUTPUT);
     pinMode(IN2, OUTPUT);
