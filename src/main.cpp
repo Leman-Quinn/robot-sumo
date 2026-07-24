@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "config.h"
-#include "ultrasonic.h"
-#include "motors.h" 
+#include "Ultrasonic.h"
+#include "Motors.h" 
 
 void setup() { 
   // SERIAL SET UP

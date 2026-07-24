@@ -1,8 +1,13 @@
 #include "config.h"
-#include "ultrasonic.h"
+#include "Ultrasonic.h"
 
-// ---------- PIN SETUP ----------
-void UltrasonicInit(){
+//---------- CONSTRUCTOR ----------//
+Ultrasonic::Ultrasonic(){
+    
+};
+
+//---------- PIN SETUP ----------//
+void Ultrasonic::ultrasonicInit(){
     // FRONTAL LEFT SENSOR
     pinMode(TRI_FL, OUTPUT);
     pinMode(ECHO_FL, INPUT);
@@ -19,10 +24,8 @@ void UltrasonicInit(){
     pinMode(TRI_R, OUTPUT);
     pinMode(ECHO_R, INPUT);
 }
-
-// ---------- IMPLEMENTATIONS ----------
-// HELPER FUNCTION
-static float ReadDistance(uint8_t trigger_pin, uint8_t echo_pin){
+//---------- HELPER ----------//
+float Ultrasonic::readDistance(uint8_t trigger_pin, uint8_t echo_pin){
     float duration;
     float distance;
 
@@ -44,19 +47,19 @@ static float ReadDistance(uint8_t trigger_pin, uint8_t echo_pin){
     return distance; 
 }
 
-// MAIN FUNCTIONS
-float ReadFrontLeftDistance(){
-    return ReadDistance(TRI_FL, ECHO_FL);
+//---------- GENERAL METHODS ----------//
+float Ultrasonic::readFrontLeftDistance(){
+    return readDistance(TRI_FL, ECHO_FL);
 }
 
-float ReadFrontRightDistance(){
-    return ReadDistance(TRI_FR, ECHO_FR);
+float Ultrasonic::readFrontRightDistance(){
+    return readDistance(TRI_FR, ECHO_FR);
 }
 
-float ReadLeftDistance(){
-    return ReadDistance(TRI_L, ECHO_L);
+float Ultrasonic::readLeftDistance(){
+    return readDistance(TRI_L, ECHO_L);
 }
 
-float ReadRightDistance(){
-    return ReadDistance(TRI_R, ECHO_R);
+float Ultrasonic::readRightDistance(){
+    return readDistance(TRI_R, ECHO_R);
 }
