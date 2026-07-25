@@ -12,12 +12,10 @@ class UltrasonicSensor{
     public:
         //---------- CONSTRUCTOR ----------//
         UltrasonicSensor(uint8_t trigger_pin, uint8_t echo_pin);
-
-        //---------- PIN SETUP ----------//
+        
+        //---------- GENERAL METHODS ----------//
         // initializes pin modes
         void init();
-
-        //---------- GENERAL METHODS ----------//
         // values returned in cm
         float readDistance();
 };

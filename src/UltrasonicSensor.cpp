@@ -8,13 +8,12 @@ UltrasonicSensor::UltrasonicSensor(uint8_t trigger_pin, uint8_t echo_pin){
     this->_echoPin = echo_pin;    
 }
 
-//---------- PIN SETUP ----------//
+//---------- METHODS ----------//
 void UltrasonicSensor::init(){
     pinMode(_triggerPin, OUTPUT);
     pinMode(_echoPin, INPUT);
 }
 
-//---------- GENERAL METHODS ----------//
 float UltrasonicSensor::readDistance(){
     float duration;
     float distance;

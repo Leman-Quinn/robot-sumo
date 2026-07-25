@@ -1,4 +1,3 @@
-#include "config.h"
 #include "Driver.h"
 
 //---------- CONSTRUCTOR ----------//
@@ -6,28 +5,33 @@ Driver::Driver(uint8_t pol1, uint8_t pol2, uint8_t pol3, uint8_t pol4) : _leftMo
     
 }
 
-//---------- GENERAL METHODS ----------//
-void Driver::Forward(){
-    _leftMotor.Forward();
-    _rightMotor.Forward();
+//---------- METHODS ----------//
+void Driver::init(){
+    _leftMotor.init();
+    _rightMotor.init();
 }
 
-void Driver::Backward(){
-    _leftMotor.Backward();
-    _rightMotor.Backward();
+void Driver::forward(){
+    _leftMotor.forward();
+    _rightMotor.forward();
 }
 
-void Driver::TurnRight(){
-    _leftMotor.Forward();
-    _rightMotor.Backward();
+void Driver::backward(){
+    _leftMotor.backward();
+    _rightMotor.backward();
 }
 
-void Driver::TurnLeft(){
-    _leftMotor.Backward();
-    _rightMotor.Forward();
+void Driver::turnRight(){
+    _leftMotor.forward();
+    _rightMotor.backward();
 }
 
-void Driver::Brake(){
-    _leftMotor.Stop();
-    _rightMotor.Stop();
+void Driver::turnLeft(){
+    _leftMotor.backward();
+    _rightMotor.forward();
+}
+
+void Driver::brake(){
+    _leftMotor.stop();
+    _rightMotor.stop();
 }

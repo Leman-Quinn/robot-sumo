@@ -1,4 +1,3 @@
-#include "config.h"
 #include "Motor.h"
 
 //---------- CONSTRUCTOR ----------//
@@ -7,29 +6,28 @@ Motor::Motor(uint8_t pol1, uint8_t pol2){
     this->_pol2 = pol2;
 };
 
-// ---------- PIN SETUP ----------
+//---------- METHODS ----------//
 void Motor::init(){
     pinMode(_pol1, OUTPUT);
     pinMode(_pol2, OUTPUT);
 
-    // AVOIDS MOVEMENT ON INIT
-    Stop();
+    // avoids movement on init
+    stop();
 
     delay(5000);
 }
 
-//---------- GENERAL METHODS ----------//
-void Motor::Forward(){
+void Motor::forward(){
     digitalWrite(_pol1, HIGH);
     digitalWrite(_pol2, LOW);
 }
 
-void Motor::Backward(){
+void Motor::backward(){
     digitalWrite(_pol1, LOW);
     digitalWrite(_pol2, HIGH);
 }
 
-void Motor::Stop(){
+void Motor::stop(){
     digitalWrite(_pol1, LOW);
     digitalWrite(_pol2, LOW);
 }

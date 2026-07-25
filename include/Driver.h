@@ -14,12 +14,13 @@ class Driver {
         //---------- CONSTRUCTOR ----------//
         Driver(uint8_t pol1, uint8_t pol2, uint8_t pol3, uint8_t pol4);
 
-        //---------- GENERAL METHODS ----------//
-        void Forward();
-        void Backward();
-        void TurnRight();
-        void TurnLeft();
-        void Brake();
+        //---------- METHODS ----------//
+        void init();
+        void forward();
+        void backward();
+        void turnRight();
+        void turnLeft();
+        void brake();
 };
 
 #endif
