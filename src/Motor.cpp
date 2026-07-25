@@ -7,7 +7,7 @@ Motor::Motor(uint8_t pol1, uint8_t pol2){
 };
 
 //---------- METHODS ----------//
-void Motor::init(){
+void Motor::begin(){
     pinMode(_pol1, OUTPUT);
     pinMode(_pol2, OUTPUT);
 

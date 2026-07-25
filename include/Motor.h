@@ -15,7 +15,7 @@ class Motor {
 
         //---------- METHODS ----------//
         // initializes pin modes
-        void init();
+        void begin();
         void forward();
         void backward();
         void stop();

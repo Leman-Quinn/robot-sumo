@@ -15,7 +15,7 @@ class UltrasonicSensor{
         
         //---------- GENERAL METHODS ----------//
         // initializes pin modes
-        void init();
+        void begin();
         // values returned in cm
         float readDistance();
 };

@@ -6,9 +6,9 @@ Driver::Driver(uint8_t pol1, uint8_t pol2, uint8_t pol3, uint8_t pol4) : _leftMo
 }
 
 //---------- METHODS ----------//
-void Driver::init(){
-    _leftMotor.init();
-    _rightMotor.init();
+void Driver::begin(){
+    _leftMotor.begin();
+    _rightMotor.begin();
 }
 
 void Driver::forward(){

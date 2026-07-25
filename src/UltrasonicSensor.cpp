@@ -9,7 +9,7 @@ UltrasonicSensor::UltrasonicSensor(uint8_t trigger_pin, uint8_t echo_pin){
 }
 
 //---------- METHODS ----------//
-void UltrasonicSensor::init(){
+void UltrasonicSensor::begin(){
     pinMode(_triggerPin, OUTPUT);
     pinMode(_echoPin, INPUT);
 }

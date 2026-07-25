@@ -15,7 +15,7 @@ class Driver {
         Driver(uint8_t pol1, uint8_t pol2, uint8_t pol3, uint8_t pol4);
 
         //---------- METHODS ----------//
-        void init();
+        void begin();
         void forward();
         void backward();
         void turnRight();
