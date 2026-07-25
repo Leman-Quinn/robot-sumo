@@ -5,14 +5,11 @@
 #include "Motor.h"
 
 class Robot {
-private:
-    Motors motors;
-    Ultrasonic ultrasonic;
-    // Infrared infrared;
+    private:
 
-public:
-    // CONSTRUCTOR
-    Robot();
-}
+    public:
+        // CONSTRUCTOR
+        Robot();
+};
 
 #endif
