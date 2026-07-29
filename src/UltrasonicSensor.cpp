@@ -1,17 +1,15 @@
 #include "UltrasonicSensor.h"
 
-#include <Arduino.h>
-
 //---------- CONSTRUCTOR ----------//
-UltrasonicSensor::UltrasonicSensor(uint8_t trigger_pin, uint8_t echo_pin){
-    this->_triggerPin = trigger_pin;
-    this->_echoPin = echo_pin;    
+UltrasonicSensor::UltrasonicSensor(uint8_t trigger, uint8_t echo){
+    this->_trigger = trigger;
+    this->_echo = echo;    
 }
 
 //---------- METHODS ----------//
 void UltrasonicSensor::begin(){
-    pinMode(_triggerPin, OUTPUT);
-    pinMode(_echoPin, INPUT);
+    pinMode(_trigger, OUTPUT);
+    pinMode(_echo, INPUT);
 }
 
 float UltrasonicSensor::readDistance(){
@@ -19,16 +17,16 @@ float UltrasonicSensor::readDistance(){
     float distance;
 
     // set trigger to low to avoid dangling
-    digitalWrite(_triggerPin, LOW);
+    digitalWrite(_trigger, LOW);
     delayMicroseconds(5);
 
     // send wave for 10 microseconds burst
-    digitalWrite(_triggerPin, HIGH);
+    digitalWrite(_trigger, HIGH);
     delayMicroseconds(10);
-    digitalWrite(_triggerPin, LOW);
+    digitalWrite(_trigger, LOW);
 
     // receive wave
-    duration = pulseIn(_echoPin, HIGH, 30000);
+    duration = pulseIn(_echo, HIGH, 30000);
   
     // convert to cm 
     distance = (duration*0.0343)/2;

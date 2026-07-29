@@ -1,7 +1,8 @@
 #include "Driver.h"
 
 //---------- CONSTRUCTOR ----------//
-Driver::Driver(uint8_t pol1, uint8_t pol2, uint8_t pol3, uint8_t pol4) : _leftMotor(pol1, pol2), _rightMotor(pol3, pol4){
+Driver::Driver(uint8_t pol1, uint8_t pol2, uint8_t pol3, uint8_t pol4):
+_leftMotor(pol1, pol2), _rightMotor(pol3, pol4){
     
 }
 

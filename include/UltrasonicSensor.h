@@ -6,12 +6,12 @@
 class UltrasonicSensor{
     private:
         //---------- ATTRIBUTES ----------//
-        uint8_t _triggerPin;
-        uint8_t _echoPin;
+        uint8_t _trigger;
+        uint8_t _echo;
 
     public:
         //---------- CONSTRUCTOR ----------//
-        UltrasonicSensor(uint8_t trigger_pin, uint8_t echo_pin);
+        UltrasonicSensor(uint8_t trigger, uint8_t echo);
         
         //---------- GENERAL METHODS ----------//
         // initializes pin modes
