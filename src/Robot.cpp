@@ -24,6 +24,10 @@ void Robot::begin(){
 }
 
 void Robot::updateUltrasonic(){
-    // all in one or two different arrays??
+    std::unordered_map<std::string, float> ultrasonicDict;
 
+    ultrasonicDict.emplace("left", _leftUltrasonic.readDistance());
+    ultrasonicDict.emplace("frontLeft", _frontLeftUltrasonic.readDistance());
+    ultrasonicDict.emplace("frontRight", _frontRightUltrasonic.readDistance());
+    ultrasonicDict.emplace("right", _rightUltrasonic.readDistance());
 }

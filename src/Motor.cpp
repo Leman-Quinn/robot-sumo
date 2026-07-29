@@ -1,10 +1,11 @@
 #include "Motor.h"
 
 //---------- CONSTRUCTOR ----------//
-Motor::Motor(uint8_t pol1, uint8_t pol2){
-    this->_pol1 = pol1;
-    this->_pol2 = pol2;
-};
+Motor::Motor(uint8_t pol1, uint8_t pol2):
+    _pol1(pol1),
+    _pol2(pol2){
+
+    }
 
 //---------- METHODS ----------//
 void Motor::begin(){

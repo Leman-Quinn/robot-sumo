@@ -1,6 +1,10 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
+#include <iostream>
+#include <unordered_map>
+#include <string>
+
 #include "config.h"
 #include "UltrasonicSensor.h"
 #include "Driver.h"
