@@ -35,3 +35,7 @@ void Robot::updateUltrasonicSensors(){
 float Robot::getUltrasonic(UltrasonicPositions position){
     return _ultrasonicDistances[position];
 }
+
+void Robot::forward(){
+    _driver.forward();
+}
