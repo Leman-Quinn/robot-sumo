@@ -30,6 +30,6 @@ void Robot::updateUltrasonicSensors(){
     _ultrasonicDistances[RIGHT] = _rightUltrasonic.readDistance();
 }
 
-float getUltrasonic(UltrasonicPositions position){
+float Robot::getUltrasonic(UltrasonicPositions position){
     return _ultrasonicDistances[position];
 }

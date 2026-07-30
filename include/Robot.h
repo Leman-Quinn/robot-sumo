@@ -1,8 +1,6 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
-#include <array>
-#include "Arduino.h"
 #include "config.h"
 #include "UltrasonicSensor.h"
 #include "Driver.h"
@@ -21,7 +19,7 @@ class Robot {
             RIGHT,
             COUNT
         };
-        std::array<float, COUNT> _ultrasonicDistances;
+        float _ultrasonicDistances[COUNT];
         
         Driver _driver;
 
