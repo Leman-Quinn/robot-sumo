@@ -11,11 +11,6 @@ Motor::Motor(uint8_t pol1, uint8_t pol2):
 void Motor::begin(){
     pinMode(_pol1, OUTPUT);
     pinMode(_pol2, OUTPUT);
-
-    // avoids movement on init
-    stop();
-
-    delay(5000);
 }
 
 void Motor::forward(){

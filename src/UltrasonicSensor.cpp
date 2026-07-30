@@ -27,9 +27,14 @@ float UltrasonicSensor::readDistance(){
 
     // receive wave
     duration = pulseIn(_echo, HIGH, 30000);
-  
+
     // convert to cm 
     distance = (duration*0.0343)/2;
+
+    if (distance == 0)
+    {
+        return -1;
+    }
   
     return distance; 
 }

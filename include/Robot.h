@@ -1,14 +1,11 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
-#include <iostream>
-#include <unordered_map>
-#include <string>
-
+#include <array>
+#include "Arduino.h"
 #include "config.h"
 #include "UltrasonicSensor.h"
 #include "Driver.h"
-#include "Motor.h"
 
 class Robot {
     private:
@@ -16,6 +13,16 @@ class Robot {
         UltrasonicSensor _frontLeftUltrasonic;
         UltrasonicSensor _frontRightUltrasonic;
         UltrasonicSensor _rightUltrasonic;
+        
+        enum UltrasonicPositions {
+            LEFT,
+            FRONT_LEFT,
+            FRONT_RIGHT,
+            RIGHT,
+            COUNT
+        };
+        std::array<float, COUNT> _ultrasonicDistances;
+        
         Driver _driver;
 
     public:
@@ -24,12 +31,13 @@ class Robot {
             uint8_t frontLeftTrigger, uint8_t frontLeftEcho,
             uint8_t frontRightTrigger, uint8_t frontRightEcho,
             uint8_t rightTrigger, uint8_t rightEcho,
-            uint8_t pol1, uint8_t pol2, uint8_t pol3, uint8_t pol4), ;
+            uint8_t pol1, uint8_t pol2, uint8_t pol3, uint8_t pol4);
 
         //---------- METHODS ----------//
         void begin();
-        void updateUltrasonic();
-        //void updateInfrared();
+        void updateUltrasonicSensors();
+        float getUltrasonic(UltrasonicPositions position);
+        //void readInfrared();
 };
 
 #endif

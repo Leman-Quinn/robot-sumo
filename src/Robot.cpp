@@ -23,11 +23,13 @@ void Robot::begin(){
     _driver.begin();
 }
 
-void Robot::updateUltrasonic(){
-    std::unordered_map<std::string, float> ultrasonicDict;
+void Robot::updateUltrasonicSensors(){
+    _ultrasonicDistances[LEFT] = _leftUltrasonic.readDistance();
+    _ultrasonicDistances[FRONT_LEFT] = _frontLeftUltrasonic.readDistance();
+    _ultrasonicDistances[FRONT_RIGHT] = _frontRightUltrasonic.readDistance();
+    _ultrasonicDistances[RIGHT] = _rightUltrasonic.readDistance();
+}
 
-    ultrasonicDict.emplace("left", _leftUltrasonic.readDistance());
-    ultrasonicDict.emplace("frontLeft", _frontLeftUltrasonic.readDistance());
-    ultrasonicDict.emplace("frontRight", _frontRightUltrasonic.readDistance());
-    ultrasonicDict.emplace("right", _rightUltrasonic.readDistance());
+float getUltrasonic(UltrasonicPositions position){
+    return _ultrasonicDistances[position];
 }
