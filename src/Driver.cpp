@@ -22,12 +22,12 @@ void Driver::backward(){
     _rightMotor.backward();
 }
 
-void Driver::turnRight(){
+void Driver::rotateRight(){
     _leftMotor.forward();
     _rightMotor.backward();
 }
 
-void Driver::turnLeft(){
+void Driver::rotateLeft(){
     _leftMotor.backward();
     _rightMotor.forward();
 }

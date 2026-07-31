@@ -37,7 +37,12 @@ class Robot {
         void updateUltrasonicSensors();
         float getUltrasonic(UltrasonicPositions position);
         //void readInfrared();
+
+        // TESTING & DEBUGGING
         void forward();
+        void rotateRight();
+        void rotateLeft();
+        void stop();
 };
 
 #endif

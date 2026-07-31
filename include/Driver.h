@@ -18,8 +18,8 @@ class Driver {
         void begin();
         void forward();
         void backward();
-        void turnRight();
-        void turnLeft();
+        void rotateRight();
+        void rotateLeft();
         void brake();
 };
 

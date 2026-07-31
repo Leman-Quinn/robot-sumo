@@ -36,6 +36,19 @@ float Robot::getUltrasonic(UltrasonicPositions position){
     return _ultrasonicDistances[position];
 }
 
+// TESTING & DEBUGGING
 void Robot::forward(){
     _driver.forward();
+}
+
+void Robot::rotateRight(){
+    _driver.rotateRight();
+}
+
+void Robot::rotateLeft(){
+    _driver.rotateLeft();
+}
+
+void Robot::stop(){
+    _driver.brake();
 }
