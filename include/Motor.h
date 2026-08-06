@@ -4,11 +4,6 @@
 #include <Arduino.h>
 
 class Motor {
-    private:
-        //---------- ATTRIBUTES ----------//
-        uint8_t _pol1;
-        uint8_t _pol2;
-
     public:
         //---------- CONSTRUCTOR ----------//
         Motor(uint8_t pol1, uint8_t pol2);
@@ -19,6 +14,11 @@ class Motor {
         void forward();
         void backward();
         void stop();
+    
+    private:
+        //---------- ATTRIBUTES ----------//
+        uint8_t _pol1;
+        uint8_t _pol2;
 };
 
 #endif

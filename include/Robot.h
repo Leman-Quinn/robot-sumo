@@ -5,13 +5,6 @@
 #include "Driver.h"
 
 class Robot {
-    private:
-        UltrasonicSensor _leftUltrasonic;
-        UltrasonicSensor _frontLeftUltrasonic;
-        UltrasonicSensor _frontRightUltrasonic;
-        UltrasonicSensor _rightUltrasonic;
-        Driver _driver;
-
     public:
         //---------- CONSTRUCTOR ----------//
         Robot(
@@ -21,28 +14,51 @@ class Robot {
             uint8_t rightTrigger, uint8_t rightEcho,
             uint8_t pol1, uint8_t pol2, uint8_t pol3, uint8_t pol4
         );
+        
+        //---------- INTERFACES ----------//
+        enum class UltrasonicPosition {LEFT, FRONT_LEFT, FRONT_RIGHT, RIGHT, COUNT};
+        float getUltrasonicDistance(UltrasonicPosition position);
+        
+        enum class EnemyPosition{NONE, LEFT, FRONT, RIGHT, COUNT};
+        EnemyPosition getEnemyPosition();
+        void setEnemyPosition(EnemyPosition enemyPosition);
+        
+        enum class State{SEARCH, ALIGN, ATTACK, EVADE, COUNT};
+        State getState();
+        void setState(State state);
 
-        //---------- USS INTERFACE ----------//
-        enum UltrasonicPositions {
-            LEFT,
-            FRONT_LEFT,
-            FRONT_RIGHT,
-            RIGHT,
-            COUNT
-        };
-        float _ultrasonicDistances[COUNT];
-
+        enum class Action{FORWARD, BRAKE, ROTATE_LEFT, ROTATE_RIGHT};
+        Action getAction();
+        void setAction(Action action);
+        
         //---------- METHODS ----------//
         void begin();
+        void sense();
+        void think();
+        void act();
+    private:
+        // INTERNAL PROPERTIES
+        State _state = State::SEARCH;
+        Action _action = Action::BRAKE;
+        EnemyPosition _enemyPosition = EnemyPosition::NONE;
+        float _ultrasonicDistances[static_cast<int>(UltrasonicPosition::COUNT)];
+        UltrasonicSensor _leftUltrasonic;
+        UltrasonicSensor _frontLeftUltrasonic;
+        UltrasonicSensor _frontRightUltrasonic;
+        UltrasonicSensor _rightUltrasonic;
+        Driver _driver;
+        
+        // SENSE INTERNAL HELPERS
         void updateUltrasonicSensors();
-        float getUltrasonic(UltrasonicPositions position);
-        //void readInfrared();
 
-        // TESTING & DEBUGGING
+        // THINK INTERNAL HELPERS
+        
+        // ACT INTERNAL HELPERS
         void forward();
+        void backward();
         void rotateRight();
         void rotateLeft();
-        void stop();
+        void brake();
 };
 
 #endif

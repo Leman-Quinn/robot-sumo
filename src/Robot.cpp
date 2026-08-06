@@ -16,6 +16,35 @@ Robot::Robot(
 
     }
 
+//---------- INTERFACES ----------//
+float Robot::getUltrasonicDistance(UltrasonicPosition position){
+    return _ultrasonicDistances[static_cast<int>(position)];
+}
+
+Robot::EnemyPosition Robot::getEnemyPosition(){
+    return _enemyPosition;
+}
+
+void Robot::setEnemyPosition(Robot::EnemyPosition enemyPosition){
+    _enemyPosition = enemyPosition;
+}
+
+Robot::State Robot::getState(){
+    return _state;
+}
+
+void Robot::setState(Robot::State state){
+    _state = state;
+}
+
+Robot::Action Robot::getAction(){
+    return _action;    
+}
+
+void Robot::setAction(Action action){
+    _action = action;
+}
+
 //---------- METHODS ----------//
 void Robot::begin(){
     _leftUltrasonic.begin();
@@ -25,20 +54,74 @@ void Robot::begin(){
     _driver.begin();
 }
 
+void Robot::sense(){
+    updateUltrasonicSensors();
+}
+
+void Robot::think(){
+    // first it checks the sensors and pinpoints the enemy location
+    float left = getUltrasonicDistance(UltrasonicPosition::LEFT);
+    float frontleft = getUltrasonicDistance(UltrasonicPosition::FRONT_LEFT);
+    float frontright = getUltrasonicDistance(UltrasonicPosition::FRONT_RIGHT);
+    float right = getUltrasonicDistance(UltrasonicPosition::RIGHT);
+
+    if ((left < frontleft) && (left < frontright) && (left < right))
+    {
+        setEnemyPosition(EnemyPosition::LEFT);
+    }
+    else if ((right < frontleft) && (right < frontright) && (right < left))
+    {
+        setEnemyPosition(EnemyPosition::RIGHT);
+    }
+    else if ((frontleft < left) && (frontright < right))
+    {
+        setEnemyPosition(EnemyPosition::FRONT);
+    }
+    else
+    {
+        setEnemyPosition(EnemyPosition::NONE);
+    }
+
+    // then it changes the state based off of the enemy location
+    switch (_enemyPosition)
+    {
+    case EnemyPosition::NONE:
+        _state = State::SEARCH;
+        _action = Action::ROTATE_RIGHT;
+        break;
+    case EnemyPosition::LEFT:
+        _state = State::SEARCH;
+        _action = Action::ROTATE_LEFT;
+        break;
+    case EnemyPosition::RIGHT:
+        _state = State::SEARCH;
+        _action = Action::ROTATE_RIGHT;
+        break;
+    case EnemyPosition::FRONT:
+        _state = State::ATTACK;
+        _action = Action::FORWARD;
+        break;
+    }
+}
+
+void Robot::act(){
+    // this function reads the current state and sends motor commands
+}
+
+
 void Robot::updateUltrasonicSensors(){
-    _ultrasonicDistances[LEFT] = _leftUltrasonic.readDistance();
-    _ultrasonicDistances[FRONT_LEFT] = _frontLeftUltrasonic.readDistance();
-    _ultrasonicDistances[FRONT_RIGHT] = _frontRightUltrasonic.readDistance();
-    _ultrasonicDistances[RIGHT] = _rightUltrasonic.readDistance();
+    _ultrasonicDistances[static_cast<int>(UltrasonicPosition::LEFT)] = _leftUltrasonic.readDistance();
+    _ultrasonicDistances[static_cast<int>(UltrasonicPosition::FRONT_LEFT)] = _frontLeftUltrasonic.readDistance();
+    _ultrasonicDistances[static_cast<int>(UltrasonicPosition::FRONT_RIGHT)] = _frontRightUltrasonic.readDistance();
+    _ultrasonicDistances[static_cast<int>(UltrasonicPosition::RIGHT)] = _rightUltrasonic.readDistance();
 }
 
-float Robot::getUltrasonic(UltrasonicPositions position){
-    return _ultrasonicDistances[position];
-}
-
-// TESTING & DEBUGGING
 void Robot::forward(){
     _driver.forward();
+}
+
+void Robot::backward(){
+    _driver.backward();
 }
 
 void Robot::rotateRight(){
@@ -49,6 +132,6 @@ void Robot::rotateLeft(){
     _driver.rotateLeft();
 }
 
-void Robot::stop(){
+void Robot::brake(){
     _driver.brake();
 }

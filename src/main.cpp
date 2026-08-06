@@ -15,15 +15,18 @@ void setup() {
     robot.begin();
 }
 
-void loop() {
+void loop() { 
+    
+    
+    /*
     //---------- INTEGRAL BEHAVIOUR TEST ----------//
     robot.updateUltrasonicSensors();
-
+    
     float left_uss = robot.getUltrasonic(Robot::LEFT);
     float frontleft_uss = robot.getUltrasonic(Robot::FRONT_LEFT);
     float frontright_uss = robot.getUltrasonic(Robot::FRONT_RIGHT);
     float right_uss = robot.getUltrasonic(Robot::RIGHT);
-
+    
     if (frontleft_uss <= 10.0 || frontright_uss <= 10.0)
     {
         robot.forward();
@@ -33,9 +36,7 @@ void loop() {
     {
         robot.rotateRight();
         delay(250);
-    }
-
-    /*
+    }          
     //---------- MOTOR DRIVER TESTS ----------//
     Serial.println("Moving");
     robot.forward();
