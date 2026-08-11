@@ -1,3 +1,4 @@
+#include "config.h"
 #include "Robot.h"
 
 //---------- CONSTRUCTOR ----------//
@@ -61,22 +62,33 @@ void Robot::sense(){
 }
 
 void Robot::think(){
-    // first it checks the sensor readings and pinpoints the enemy location
-    float left = getUltrasonicDistance(UltrasonicPosition::LEFT);
-    float frontleft = getUltrasonicDistance(UltrasonicPosition::FRONT_LEFT);
-    float frontright = getUltrasonicDistance(UltrasonicPosition::FRONT_RIGHT);
-    float right = getUltrasonicDistance(UltrasonicPosition::RIGHT);
+    // 1. Checks the raw sensor readings
+    float leftDistance = getUltrasonicDistance(UltrasonicPosition::LEFT);
+    float frontleftDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_LEFT);
+    float frontrightDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_RIGHT);
+    float rightDistance = getUltrasonicDistance(UltrasonicPosition::RIGHT);
 
-    // then it decides where the enemy must be based on the sensor feed
-    if ((left < frontleft) && (left < frontright) && (left < right))
+    // 2. Filters the readings to gauge potential enemy direction
+    bool targetOnLeft = leftDistance < MAX_ENEMY_DISTANCE;
+    bool targetOnFront = (frontleftDistance < MAX_ENEMY_DISTANCE) && (frontrightDistance < MAX_ENEMY_DISTANCE);
+    bool targetOnRight = rightDistance < MAX_ENEMY_DISTANCE;
+
+    // 3. Saves enemy position
+    if (targetOnLeft &&
+        !targetOnFront &&
+        !targetOnRight)
     {
         setEnemyPosition(EnemyPosition::LEFT);
     }
-    else if ((right < frontleft) && (right < frontright) && (right < left))
+    else if (!targetOnLeft &&
+            !targetOnFront &&
+            targetOnRight)
     {
         setEnemyPosition(EnemyPosition::RIGHT);
     }
-    else if ((frontleft < left) && (frontright < right))
+    else if (!targetOnLeft &&
+            targetOnFront &&
+            !targetOnRight)
     {
         setEnemyPosition(EnemyPosition::FRONT);
     }
@@ -85,30 +97,30 @@ void Robot::think(){
         setEnemyPosition(EnemyPosition::NONE);
     }
 
-    // lastly it changes the state and action based off of the enemy location
+    // 4. Changes the state and action
     switch (_enemyPosition)
     {
     case EnemyPosition::NONE:
-        _state = State::SEARCH;
-        _action = Action::ROTATE_RIGHT;
-        break;
+            _state = State::SEARCH;
+            _action = Action::ROTATE_RIGHT;
+            break;
     case EnemyPosition::LEFT:
-        _state = State::SEARCH;
-        _action = Action::ROTATE_LEFT;
-        break;
+            _state = State::SEARCH;
+            _action = Action::ROTATE_LEFT;
+            break;
     case EnemyPosition::RIGHT:
-        _state = State::SEARCH;
-        _action = Action::ROTATE_RIGHT;
-        break;
+            _state = State::SEARCH;
+            _action = Action::ROTATE_RIGHT;
+            break;
     case EnemyPosition::FRONT:
-        _state = State::ATTACK;
-        _action = Action::FORWARD;
-        break;
+            _state = State::ATTACK;
+            _action = Action::FORWARD;
+            break;
     }
 }
 
 void Robot::act(){
-    // this function reads the current action and sends motor commands
+    // Translates action into motor commands
     switch (_action)
     {
     case Action::FORWARD:

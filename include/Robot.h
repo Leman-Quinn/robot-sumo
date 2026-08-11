@@ -41,10 +41,10 @@ class Robot {
         //-----------------------------//
     private:
         //---------- INTERNAL PROPERTIES ----------//
+        float _ultrasonicDistances[static_cast<int>(UltrasonicPosition::COUNT)];
+        EnemyPosition _enemyPosition = EnemyPosition::NONE;
         State _state = State::SEARCH;
         Action _action = Action::BRAKE;
-        EnemyPosition _enemyPosition = EnemyPosition::NONE;
-        float _ultrasonicDistances[static_cast<int>(UltrasonicPosition::COUNT)];
         UltrasonicSensor _leftUltrasonic;
         UltrasonicSensor _frontLeftUltrasonic;
         UltrasonicSensor _frontRightUltrasonic;

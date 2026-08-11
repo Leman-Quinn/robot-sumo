@@ -2,6 +2,8 @@
 #define CONFIG_H
 
 #include <Arduino.h>
+// ---------- GENERAL VARIABLES ----------//
+constexpr float MAX_ENEMY_DISTANCE = 150;
 
 // ---------- INFRARED PINS ----------
 
