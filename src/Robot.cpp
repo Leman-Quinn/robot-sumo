@@ -1,6 +1,6 @@
 #include "Robot.h"
 
- //---------- CONSTRUCTOR ----------//
+//---------- CONSTRUCTOR ----------//
 Robot::Robot(
     uint8_t leftTrigger, uint8_t leftEcho,
     uint8_t frontLeftTrigger, uint8_t frontLeftEcho,
@@ -15,6 +15,7 @@ Robot::Robot(
     _driver(pol1, pol2, pol3, pol4){
 
     }
+//---------------------------------//
 
 //---------- INTERFACES ----------//
 float Robot::getUltrasonicDistance(UltrasonicPosition position){
@@ -44,6 +45,7 @@ Robot::Action Robot::getAction(){
 void Robot::setAction(Action action){
     _action = action;
 }
+//--------------------------------//
 
 //---------- METHODS ----------//
 void Robot::begin(){
@@ -59,12 +61,13 @@ void Robot::sense(){
 }
 
 void Robot::think(){
-    // first it checks the sensors and pinpoints the enemy location
+    // first it checks the sensor readings and pinpoints the enemy location
     float left = getUltrasonicDistance(UltrasonicPosition::LEFT);
     float frontleft = getUltrasonicDistance(UltrasonicPosition::FRONT_LEFT);
     float frontright = getUltrasonicDistance(UltrasonicPosition::FRONT_RIGHT);
     float right = getUltrasonicDistance(UltrasonicPosition::RIGHT);
 
+    // then it decides where the enemy must be based on the sensor feed
     if ((left < frontleft) && (left < frontright) && (left < right))
     {
         setEnemyPosition(EnemyPosition::LEFT);
@@ -82,7 +85,7 @@ void Robot::think(){
         setEnemyPosition(EnemyPosition::NONE);
     }
 
-    // then it changes the state based off of the enemy location
+    // lastly it changes the state and action based off of the enemy location
     switch (_enemyPosition)
     {
     case EnemyPosition::NONE:
@@ -105,10 +108,26 @@ void Robot::think(){
 }
 
 void Robot::act(){
-    // this function reads the current state and sends motor commands
+    // this function reads the current action and sends motor commands
+    switch (_action)
+    {
+    case Action::FORWARD:
+        forward();
+        break;
+    case Action::BRAKE:
+        brake();
+        break;
+    case Action::ROTATE_LEFT:
+        rotateLeft();
+        break;
+    case Action::ROTATE_RIGHT:
+        rotateRight();
+        break;
+    }
 }
+//-----------------------------//
 
-
+//------- INTERNAL HELPERS -------//
 void Robot::updateUltrasonicSensors(){
     _ultrasonicDistances[static_cast<int>(UltrasonicPosition::LEFT)] = _leftUltrasonic.readDistance();
     _ultrasonicDistances[static_cast<int>(UltrasonicPosition::FRONT_LEFT)] = _frontLeftUltrasonic.readDistance();
@@ -135,3 +154,4 @@ void Robot::rotateLeft(){
 void Robot::brake(){
     _driver.brake();
 }
+//-------------------------------//

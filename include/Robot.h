@@ -14,6 +14,7 @@ class Robot {
             uint8_t rightTrigger, uint8_t rightEcho,
             uint8_t pol1, uint8_t pol2, uint8_t pol3, uint8_t pol4
         );
+        //---------------------------------//
         
         //---------- INTERFACES ----------//
         enum class UltrasonicPosition {LEFT, FRONT_LEFT, FRONT_RIGHT, RIGHT, COUNT};
@@ -23,21 +24,23 @@ class Robot {
         EnemyPosition getEnemyPosition();
         void setEnemyPosition(EnemyPosition enemyPosition);
         
-        enum class State{SEARCH, ALIGN, ATTACK, EVADE, COUNT};
+        enum class State{SEARCH, ALIGN, ATTACK, EVADE_ENEMY, EVADE_LINE, COUNT};
         State getState();
         void setState(State state);
 
-        enum class Action{FORWARD, BRAKE, ROTATE_LEFT, ROTATE_RIGHT};
+        enum class Action{FORWARD, BACKWARD, BRAKE, ROTATE_LEFT, ROTATE_RIGHT};
         Action getAction();
         void setAction(Action action);
-        
+        //-------------------------------//
+
         //---------- METHODS ----------//
         void begin();
         void sense();
         void think();
         void act();
+        //-----------------------------//
     private:
-        // INTERNAL PROPERTIES
+        //---------- INTERNAL PROPERTIES ----------//
         State _state = State::SEARCH;
         Action _action = Action::BRAKE;
         EnemyPosition _enemyPosition = EnemyPosition::NONE;
@@ -47,18 +50,23 @@ class Robot {
         UltrasonicSensor _frontRightUltrasonic;
         UltrasonicSensor _rightUltrasonic;
         Driver _driver;
+        //-----------------------------------------//
         
-        // SENSE INTERNAL HELPERS
+        //---------- (SENSE) INTERNAL HELPERS ----------//
         void updateUltrasonicSensors();
+        //----------------------------------------------//
 
-        // THINK INTERNAL HELPERS
+        //---------- (THINK) INTERNAL HELPERS ----------//
         
-        // ACT INTERNAL HELPERS
+        //----------------------------------------------//
+
+        //---------- (ACT) INTERNAL HELPERS ----------//
         void forward();
         void backward();
         void rotateRight();
         void rotateLeft();
         void brake();
+        //--------------------------------------------//
 };
 
 #endif
