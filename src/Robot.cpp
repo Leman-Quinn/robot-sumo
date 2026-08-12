@@ -62,13 +62,13 @@ void Robot::sense(){
 }
 
 void Robot::think(){
-    // 1. Checks the raw sensor readings
+    // 1. Checks raw sensor readings
     float leftDistance = getUltrasonicDistance(UltrasonicPosition::LEFT);
     float frontleftDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_LEFT);
     float frontrightDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_RIGHT);
     float rightDistance = getUltrasonicDistance(UltrasonicPosition::RIGHT);
 
-    // 2. Filters the readings to gauge potential enemy direction
+    // 2. Filters readings to gauge potential enemy direction
     bool targetOnLeft = leftDistance < MAX_ENEMY_DISTANCE;
     bool targetOnFront = (frontleftDistance < MAX_ENEMY_DISTANCE) && (frontrightDistance < MAX_ENEMY_DISTANCE);
     bool targetOnRight = rightDistance < MAX_ENEMY_DISTANCE;
@@ -101,21 +101,21 @@ void Robot::think(){
     switch (_enemyPosition)
     {
     case EnemyPosition::NONE:
-            _state = State::SEARCH;
-            _action = Action::ROTATE_RIGHT;
-            break;
+        _state = State::SEARCH;
+        _action = Action::ROTATE_RIGHT;
+        break;
     case EnemyPosition::LEFT:
-            _state = State::SEARCH;
-            _action = Action::ROTATE_LEFT;
-            break;
+        _state = State::SEARCH;
+        _action = Action::ROTATE_LEFT;
+        break;
     case EnemyPosition::RIGHT:
-            _state = State::SEARCH;
-            _action = Action::ROTATE_RIGHT;
-            break;
+        _state = State::SEARCH;
+        _action = Action::ROTATE_RIGHT;
+        break;
     case EnemyPosition::FRONT:
-            _state = State::ATTACK;
-            _action = Action::FORWARD;
-            break;
+        _state = State::ATTACK;
+        _action = Action::FORWARD;
+        break;
     }
 }
 
@@ -124,6 +124,9 @@ void Robot::act(){
     switch (_action)
     {
     case Action::FORWARD:
+        forward();
+        break;
+    case Action::BACKWARD:
         forward();
         break;
     case Action::BRAKE:
