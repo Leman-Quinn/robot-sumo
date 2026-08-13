@@ -64,58 +64,64 @@ void Robot::sense(){
 void Robot::think(){
     // 1. Checks raw sensor readings
     float leftDistance = getUltrasonicDistance(UltrasonicPosition::LEFT);
-    float frontleftDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_LEFT);
-    float frontrightDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_RIGHT);
+    float frontLeftDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_LEFT);
+    float frontRightDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_RIGHT);
     float rightDistance = getUltrasonicDistance(UltrasonicPosition::RIGHT);
 
     // 2. Filters readings to gauge potential enemy direction
     bool targetOnLeft = leftDistance < MAX_ENEMY_DISTANCE;
-    bool targetOnFront = (frontleftDistance < MAX_ENEMY_DISTANCE) && (frontrightDistance < MAX_ENEMY_DISTANCE);
+    bool targetOnFrontLeft = frontLeftDistance < MAX_ENEMY_DISTANCE;
+    bool targetOnFront = (frontLeftDistance < MAX_ENEMY_DISTANCE) && (frontRightDistance < MAX_ENEMY_DISTANCE);
+    bool targetOnFrontRight = frontRightDistance < MAX_ENEMY_DISTANCE;
     bool targetOnRight = rightDistance < MAX_ENEMY_DISTANCE;
 
-    // 3. Saves enemy position
-    if (targetOnLeft &&
-        !targetOnFront &&
-        !targetOnRight)
-    {
-        setEnemyPosition(EnemyPosition::LEFT);
-    }
-    else if (!targetOnLeft &&
-            !targetOnFront &&
-            targetOnRight)
-    {
-        setEnemyPosition(EnemyPosition::RIGHT);
-    }
-    else if (!targetOnLeft &&
-            targetOnFront &&
-            !targetOnRight)
+    // 3. Registers enemy position
+    if (targetOnFront)
     {
         setEnemyPosition(EnemyPosition::FRONT);
     }
-    else
+    else if (targetOnFrontLeft)
     {
+        setEnemyPosition(EnemyPosition::FRONT_LEFT);
+    }
+    else if (targetOnFrontRight)
+    {
+        setEnemyPosition(EnemyPosition::FRONT_RIGHT);
+    }
+    else if (targetOnLeft)
+    {
+        setEnemyPosition(EnemyPosition::LEFT);
+    }
+    else if (targetOnRight)
+    {
+        setEnemyPosition(EnemyPosition::RIGHT);
+    }
+    else{
         setEnemyPosition(EnemyPosition::NONE);
     }
 
     // 4. Changes the state and action
     switch (_enemyPosition)
     {
-    case EnemyPosition::NONE:
-        _state = State::SEARCH;
-        _action = Action::ROTATE_RIGHT;
-        break;
-    case EnemyPosition::LEFT:
-        _state = State::SEARCH;
-        _action = Action::ROTATE_LEFT;
-        break;
-    case EnemyPosition::RIGHT:
-        _state = State::SEARCH;
-        _action = Action::ROTATE_RIGHT;
-        break;
-    case EnemyPosition::FRONT:
-        _state = State::ATTACK;
-        _action = Action::FORWARD;
-        break;
+        case EnemyPosition::FRONT:
+            _state = State::ATTACK;
+            _action = Action::FORWARD;   
+        case EnemyPosition::LEFT:
+            _state = State::ALIGN;
+            _action = Action::ROTATE_LEFT;
+            break;
+        case EnemyPosition::RIGHT:
+            _state = State::ALIGN;
+            _action = Action::ROTATE_RIGHT;
+            break;
+        case EnemyPosition::NONE:
+            _state = State::SEARCH;
+            _action = Action::BRAKE;
+            break;
+        default:
+            _state = State::SEARCH;
+            _action = Action::BRAKE;
+            break;
     }
 }
 
@@ -123,21 +129,21 @@ void Robot::act(){
     // Translates action into motor commands
     switch (_action)
     {
-    case Action::FORWARD:
-        forward();
-        break;
-    case Action::BACKWARD:
-        forward();
-        break;
-    case Action::BRAKE:
-        brake();
-        break;
-    case Action::ROTATE_LEFT:
-        rotateLeft();
-        break;
-    case Action::ROTATE_RIGHT:
-        rotateRight();
-        break;
+        case Action::FORWARD:
+            forward();
+            break;
+        case Action::BACKWARD:
+            forward();
+            break;
+        case Action::BRAKE:
+            brake();
+            break;
+        case Action::ROTATE_LEFT:
+            rotateLeft();
+            break;
+        case Action::ROTATE_RIGHT:
+            rotateRight();
+            break;
     }
 }
 //-----------------------------//

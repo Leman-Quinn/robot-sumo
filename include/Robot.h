@@ -20,7 +20,7 @@ class Robot {
         enum class UltrasonicPosition {LEFT, FRONT_LEFT, FRONT_RIGHT, RIGHT, COUNT};
         float getUltrasonicDistance(UltrasonicPosition position);
         
-        enum class EnemyPosition{NONE, LEFT, FRONT, RIGHT, COUNT};
+        enum class EnemyPosition{NONE, LEFT, FRONT_LEFT, FRONT, FRONT_RIGHT, RIGHT, COUNT};
         EnemyPosition getEnemyPosition();
         void setEnemyPosition(EnemyPosition enemyPosition);
         

@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 // ---------- GENERAL VARIABLES ----------//
-constexpr float MAX_ENEMY_DISTANCE = 150;
+constexpr float MAX_ENEMY_DISTANCE = 20;
 
 // ---------- INFRARED PINS ----------
 
