@@ -105,7 +105,16 @@ void Robot::think(){
     {
         case EnemyPosition::FRONT:
             _state = State::ATTACK;
-            _action = Action::FORWARD;   
+            _action = Action::FORWARD;
+            break;
+        case EnemyPosition::FRONT_LEFT:
+            _state = State::ATTACK;
+            _action = Action::FORWARD;
+            break;
+        case EnemyPosition::FRONT_RIGHT:
+            _state = State::ATTACK;
+            _action = Action::FORWARD;
+            break;   
         case EnemyPosition::LEFT:
             _state = State::ALIGN;
             _action = Action::ROTATE_LEFT;
