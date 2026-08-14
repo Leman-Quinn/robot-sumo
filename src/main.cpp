@@ -18,7 +18,7 @@ void setup() {
 void loop() { 
     robot.sense();
     robot.think();
-    robot.act();
+    // robot.act();
     
     /*
     //---------- INTEGRAL BEHAVIOUR TEST ----------//

@@ -67,6 +67,9 @@ class Robot {
         void rotateLeft();
         void brake();
         //--------------------------------------------//
+
+        //---------- DEBUGGING ----------//
+        float front_deadband();
 };
 
 #endif
