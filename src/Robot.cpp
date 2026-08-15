@@ -144,7 +144,7 @@ void Robot::act(){
             forward();
             break;
         case Action::BACKWARD:
-            forward();
+            backward();
             break;
         case Action::BRAKE:
             brake();
@@ -171,6 +171,10 @@ void Robot::forward(){
     _driver.forward();
 }
 
+void Robot::forward(int perc){
+    _driver.forward(perc);
+}
+
 void Robot::backward(){
     _driver.backward();
 }
@@ -186,6 +190,7 @@ void Robot::rotateLeft(){
 void Robot::brake(){
     _driver.brake();
 }
+
 //-------------------------------//
 
 //---------- DEBUGGING ----------//

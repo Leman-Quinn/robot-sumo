@@ -23,7 +23,7 @@ void Motor::backward(){
     digitalWrite(_pol2, HIGH);
 }
 
-void Motor::stop(){
+void Motor::brake(){
     digitalWrite(_pol1, LOW);
     digitalWrite(_pol2, LOW);
 }

@@ -13,7 +13,7 @@ class Motor {
         void begin();
         void forward();
         void backward();
-        void stop();
+        void brake();
     
     private:
         //---------- ATTRIBUTES ----------//

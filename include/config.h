@@ -24,7 +24,9 @@ constexpr uint8_t ECHO_R = 7;
 // ---------- DRIVER PINS ----------
 constexpr uint8_t AIN1 = 2;
 constexpr uint8_t AIN2 = 3;
+constexpr uint8_t PWMA = 8;
 constexpr uint8_t BIN1 = 4;
 constexpr uint8_t BIN2 = 5;
+constexpr uint8_t PWMB = 9;
 
 #endif

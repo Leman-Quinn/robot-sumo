@@ -62,6 +62,7 @@ class Robot {
 
         //---------- (ACT) INTERNAL HELPERS ----------//
         void forward();
+        void forward(int perc);
         void backward();
         void rotateRight();
         void rotateLeft();
