@@ -7,13 +7,14 @@ Robot::Robot(
     uint8_t frontLeftTrigger, uint8_t frontLeftEcho,
     uint8_t frontRightTrigger, uint8_t frontRightEcho,
     uint8_t rightTrigger, uint8_t rightEcho,
-    uint8_t pol1, uint8_t pol2, uint8_t pol3, uint8_t pol4
+    uint8_t pol1, uint8_t pol2, uint8_t pwma, 
+    uint8_t pol3, uint8_t pol4, uint8_t pwmb
     ):
     _leftUltrasonic(leftTrigger, leftEcho),
     _frontLeftUltrasonic(frontLeftTrigger, frontLeftEcho),
     _frontRightUltrasonic(frontRightTrigger, frontRightEcho),
     _rightUltrasonic(rightTrigger, rightEcho),
-    _driver(pol1, pol2, pol3, pol4){
+    _driver(pol1, pol2, pwma, pol3, pol4, pwmb){
 
     }
 //---------------------------------//
@@ -171,8 +172,8 @@ void Robot::forward(){
     _driver.forward();
 }
 
-void Robot::forward(int perc){
-    _driver.forward(perc);
+void Robot::forward(int pwm_percentage){
+    _driver.forward(pwm_percentage);
 }
 
 void Robot::backward(){
@@ -192,6 +193,7 @@ void Robot::brake(){
 }
 
 //-------------------------------//
+
 
 //---------- DEBUGGING ----------//
 float Robot::front_deadband(){

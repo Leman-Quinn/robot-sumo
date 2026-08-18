@@ -6,7 +6,8 @@ Robot robot(
     TRI_FL, ECHO_FL,
     TRI_FR, ECHO_FR,
     TRI_R, ECHO_R,
-    AIN1, AIN2, BIN1, BIN2
+    AIN1, AIN2, PWMA, 
+    BIN1, BIN2, PWMB
 );
 
 void setup() { 
