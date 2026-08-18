@@ -195,8 +195,8 @@ void Robot::brake(){
 //-------------------------------//
 
 
-//---------- DEBUGGING ----------//
-float Robot::front_deadband(){
+//---------- TESTING ----------//
+float Robot::front_deadband() {
     // Deadband & correction filter
     float frontLeftDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_LEFT);
     float frontRightDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_RIGHT);
