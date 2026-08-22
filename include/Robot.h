@@ -62,9 +62,8 @@ class Robot {
         //----------------------------------------------//
 
         //---------- (ACT) INTERNAL HELPERS ----------//
-        void forward();
         void forward(int pwm_percentage);
-        void backward();
+        void backward(int pwm_percentage);
         void rotateRight();
         void rotateLeft();
         void brake();

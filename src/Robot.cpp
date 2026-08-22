@@ -142,10 +142,10 @@ void Robot::act(){
     switch (_action)
     {
         case Action::FORWARD:
-            forward();
+            forward(100); // the percentage can change
             break;
         case Action::BACKWARD:
-            backward();
+            backward(100); // the percentage can change
             break;
         case Action::BRAKE:
             brake();
@@ -168,16 +168,12 @@ void Robot::updateUltrasonicSensors(){
     _ultrasonicDistances[static_cast<int>(UltrasonicPosition::RIGHT)] = _rightUltrasonic.readDistance();
 }
 
-void Robot::forward(){
-    _driver.forward();
-}
-
 void Robot::forward(int pwm_percentage){
     _driver.forward(pwm_percentage);
 }
 
-void Robot::backward(){
-    _driver.backward();
+void Robot::backward(int pwm_percentage){
+    _driver.backward(pwm_percentage);
 }
 
 void Robot::rotateRight(){

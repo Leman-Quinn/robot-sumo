@@ -15,11 +15,6 @@ void Driver::begin(){
     _rightMotor.begin();
 }
 
-void Driver::forward(){
-    _leftMotor.forward();
-    _rightMotor.forward();
-}
-
 void Driver::forward(int pwm_perc){
     _leftMotor.forward();
     _rightMotor.forward();
@@ -30,14 +25,9 @@ void Driver::forward(int pwm_perc){
     analogWrite(_pwmb, pwm_raw);
 }
 
-void Driver::backward(){
+void Driver::backward(int pwm_perc){
     _leftMotor.backward();
     _rightMotor.backward();
-}
-
-void Driver::backward(int pwm_perc){
-    _leftMotor.forward();
-    _rightMotor.forward();
 
     int pwm_raw = (pwm_perc/255)/100;
 
