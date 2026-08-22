@@ -13,8 +13,8 @@ class Driver {
         //---------- METHODS ----------//
         void begin();
         void forward(int pwm_perc);
-        //void forwardRight(int pwm_perc);
-        //void forwardLeft(int pwm_perc);
+        void forwardRight(int pwm_perc);
+        void forwardLeft(int pwm_perc);
         void backward(int pwm_perc);
         void rotateRight();
         void rotateLeft();
