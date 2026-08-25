@@ -71,23 +71,13 @@ void Robot::think(){
 
     // 2. Distance threshold filter
     bool targetOnLeft = leftDistance < MAX_ENEMY_DISTANCE;
-    bool targetOnFrontLeft = frontLeftDistance < MAX_ENEMY_DISTANCE;
     bool targetOnFront = (frontLeftDistance < MAX_ENEMY_DISTANCE) && (frontRightDistance < MAX_ENEMY_DISTANCE);
-    bool targetOnFrontRight = frontRightDistance < MAX_ENEMY_DISTANCE;
     bool targetOnRight = rightDistance < MAX_ENEMY_DISTANCE;
 
     // 3. Registers enemy position
     if (targetOnFront)
     {
         setEnemyPosition(EnemyPosition::FRONT);
-    }
-    else if (targetOnFrontLeft)
-    {
-        setEnemyPosition(EnemyPosition::FRONT_LEFT);
-    }
-    else if (targetOnFrontRight)
-    {
-        setEnemyPosition(EnemyPosition::FRONT_RIGHT);
     }
     else if (targetOnLeft)
     {
@@ -107,15 +97,7 @@ void Robot::think(){
         case EnemyPosition::FRONT:
             _state = State::ATTACK;
             _action = Action::FORWARD;
-            break;
-        case EnemyPosition::FRONT_LEFT:
-            _state = State::ATTACK;
-            _action = Action::FORWARD;
-            break;
-        case EnemyPosition::FRONT_RIGHT:
-            _state = State::ATTACK;
-            _action = Action::FORWARD;
-            break;   
+            break;  
         case EnemyPosition::LEFT:
             _state = State::ALIGN;
             _action = Action::ROTATE_LEFT;
