@@ -76,8 +76,6 @@ void Robot::think(){
     bool targetOnFrontRight = frontRightDistance < MAX_ENEMY_DISTANCE;
     bool targetOnRight = rightDistance < MAX_ENEMY_DISTANCE;
 
-    front_deadband();
-
     // 3. Registers enemy position
     if (targetOnFront)
     {
