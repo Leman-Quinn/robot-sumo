@@ -7,14 +7,14 @@ Robot::Robot(
     uint8_t frontLeftTrigger, uint8_t frontLeftEcho,
     uint8_t frontRightTrigger, uint8_t frontRightEcho,
     uint8_t rightTrigger, uint8_t rightEcho,
-    uint8_t pol1, uint8_t pol2, uint8_t pwma, 
-    uint8_t pol3, uint8_t pol4, uint8_t pwmb
+    uint8_t pol1, uint8_t pol2, 
+    uint8_t pol3, uint8_t pol4
     ):
     _leftUltrasonic(leftTrigger, leftEcho),
     _frontLeftUltrasonic(frontLeftTrigger, frontLeftEcho),
     _frontRightUltrasonic(frontRightTrigger, frontRightEcho),
     _rightUltrasonic(rightTrigger, rightEcho),
-    _driver(pol1, pol2, pwma, pol3, pol4, pwmb){
+    _driver(pol1, pol2, pol3, pol4){
 
     }
 //---------------------------------//
@@ -142,10 +142,10 @@ void Robot::act(){
     switch (_action)
     {
         case Action::FORWARD:
-            forward(100); // the percentage can change
+            forward();
             break;
         case Action::BACKWARD:
-            backward(100); // the percentage can change
+            backward();
             break;
         case Action::BRAKE:
             brake();
@@ -168,20 +168,12 @@ void Robot::updateUltrasonicSensors(){
     _ultrasonicDistances[static_cast<int>(UltrasonicPosition::RIGHT)] = _rightUltrasonic.readDistance();
 }
 
-void Robot::forward(int pwm_percentage){
-    _driver.forward(pwm_percentage);
+void Robot::forward(){
+    _driver.forward();
 }
 
-void Robot::forwardRight(int pwm_percentage){
-    _driver.forwardRight(pwm_percentage);
-}
-
-void Robot::forwardLeft(int pwm_percentage){
-    _driver.forwardLeft(pwm_percentage);
-}
-
-void Robot::backward(int pwm_percentage){
-    _driver.backward(pwm_percentage);
+void Robot::backward(){
+    _driver.backward();
 }
 
 void Robot::rotateRight(){
@@ -194,42 +186,4 @@ void Robot::rotateLeft(){
 
 void Robot::brake(){
     _driver.brake();
-}
-
-//-------------------------------//
-
-
-//---------- TESTING ----------//
-float Robot::front_deadband() {
-    // Deadband & correction filter
-    float frontLeftDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_LEFT);
-    float frontRightDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_RIGHT);
-    float frontDbFactor = frontLeftDistance - frontRightDistance;
-
-    Serial.begin(9600);
-    Serial.print("FL: ");
-    Serial.print(frontLeftDistance);
-    Serial.print(" | ");
-    Serial.print("FR: ");
-    Serial.print(frontRightDistance);
-    Serial.print(" | ");
-    Serial.print("DIFF: ");
-    Serial.print(frontDbFactor);
-    Serial.print(" | ");
-    
-    if ((frontDbFactor >= -5) && (frontDbFactor <= 5)) 
-    {
-        Serial.println("NO ALIGNMENT");
-    }
-    else if (frontDbFactor < -5)
-    {
-        Serial.println("STEER LEFT");
-    }
-    else if (frontDbFactor > 5)
-    {
-        Serial.println("STEER RIGHT");
-    }
-
-    delay(500);
-//-------------------------------//
 }

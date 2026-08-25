@@ -12,8 +12,8 @@ class Robot {
             uint8_t frontLeftTrigger, uint8_t frontLeftEcho,
             uint8_t frontRightTrigger, uint8_t frontRightEcho,
             uint8_t rightTrigger, uint8_t rightEcho,
-            uint8_t pol1, uint8_t pol2, uint8_t pwma,
-            uint8_t pol3, uint8_t pol4, uint8_t pwmb
+            uint8_t pol1, uint8_t pol2,
+            uint8_t pol3, uint8_t pol4
         );
         //---------------------------------//
         
@@ -62,17 +62,12 @@ class Robot {
         //----------------------------------------------//
 
         //---------- (ACT) INTERNAL HELPERS ----------//
-        void forward(int pwm_percentage);
-        void forwardRight(int pwm_percentage);
-        void forwardLeft(int pwm_percentage);
-        void backward(int pwm_percentage);
+        void forward();
+        void backward();
         void rotateRight();
         void rotateLeft();
         void brake();
         //--------------------------------------------//
-
-        //---------- DEBUGGING ----------//
-        float front_deadband();
 };
 
 #endif
