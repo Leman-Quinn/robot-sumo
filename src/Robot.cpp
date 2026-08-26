@@ -43,10 +43,6 @@ void Robot::setState(Robot::State state){
 Robot::Action Robot::getAction(){
     return _action;    
 }
-
-void Robot::setAction(Action action){
-    _action = action;
-}
 //--------------------------------//
 
 //---------- METHODS ----------//
@@ -71,7 +67,7 @@ void Robot::think(){
 
     // 2. Distance threshold filter
     bool targetOnLeft = leftDistance < MAX_ENEMY_DISTANCE;
-    bool targetOnFront = (frontLeftDistance < MAX_ENEMY_DISTANCE) && (frontRightDistance < MAX_ENEMY_DISTANCE);
+    bool targetOnFront = (frontLeftDistance < MAX_ENEMY_DISTANCE) || (frontRightDistance < MAX_ENEMY_DISTANCE);
     bool targetOnRight = rightDistance < MAX_ENEMY_DISTANCE;
 
     // 3. Registers enemy position
@@ -108,11 +104,7 @@ void Robot::think(){
             break;
         case EnemyPosition::NONE:
             _state = State::SEARCH;
-            _action = Action::BRAKE;
-            break;
-        default:
-            _state = State::SEARCH;
-            _action = Action::BRAKE;
+            _action = Action::PATROL;
             break;
     }
 }
@@ -135,6 +127,9 @@ void Robot::act(){
             break;
         case Action::ROTATE_RIGHT:
             rotateRight();
+            break;
+        case Action::PATROL:
+            simple_patrol();
             break;
     }
 }
@@ -167,3 +162,27 @@ void Robot::rotateLeft(){
 void Robot::brake(){
     _driver.brake();
 }
+
+//--------------- STRATEGIES -----------------//
+void Robot::simple_patrol(){
+    switch (_stratStep)
+    {
+    case StrategyStep::FORWARD:
+        forward();
+
+        if (millis() - _stratClock >= 750){
+            _stratStep = StrategyStep::ROTATE_RIGHT;
+            _stratClock = millis();
+        }
+        break;
+    case StrategyStep::ROTATE_RIGHT:
+        rotateRight();
+
+        if (millis() - _stratClock >= 500){
+            _stratStep = StrategyStep::FORWARD;
+            _stratClock = millis();
+        }
+        break;
+    }
+}
+//---------------------------------------------//

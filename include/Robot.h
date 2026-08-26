@@ -29,9 +29,11 @@ class Robot {
         State getState();
         void setState(State state);
 
-        enum class Action{FORWARD, BACKWARD, BRAKE, ROTATE_LEFT, ROTATE_RIGHT};
+        enum class Action{FORWARD, BACKWARD, BRAKE, ROTATE_LEFT, ROTATE_RIGHT, PATROL};
         Action getAction();
         void setAction(Action action);
+
+        enum class StrategyStep{FORWARD, ROTATE_RIGHT};
         //-------------------------------//
 
         //---------- METHODS ----------//
@@ -39,6 +41,7 @@ class Robot {
         void sense();
         void think();
         void act();
+        void simple_patrol();
         //-----------------------------//
     private:
         //---------- INTERNAL PROPERTIES ----------//
@@ -51,6 +54,8 @@ class Robot {
         UltrasonicSensor _frontRightUltrasonic;
         UltrasonicSensor _rightUltrasonic;
         Driver _driver;
+        StrategyStep _stratStep = StrategyStep::FORWARD;
+        unsigned long _stratClock = 0;
         //-----------------------------------------//
         
         //---------- (SENSE) INTERNAL HELPERS ----------//
@@ -58,16 +63,17 @@ class Robot {
         //----------------------------------------------//
 
         //---------- (THINK) INTERNAL HELPERS ----------//
-        
+        unsigned long getLastInstruction();
+        void setLastInstruction(unsigned long lastInstruction);
         //----------------------------------------------//
 
-        //---------- (ACT) INTERNAL HELPERS ----------//
+        //----------- (ACT) INTERNAL HELPERS -----------//
         void forward();
         void backward();
         void rotateRight();
         void rotateLeft();
         void brake();
-        //--------------------------------------------//
+        //---------------------------------------------//
 };
 
 #endif
