@@ -40,6 +40,35 @@ class Robot {
         void think();
         void act();
         //-----------------------------//
+
+        //-------- FOR TESTING --------//
+        void forward(int pwm_perc){
+            this->forward(pwm_perc);
+        }
+        void forwardRight(int pwm_perc){
+            this->forwardRight(pwm_perc);
+        }
+        void forwardLeft(int pwm_perc){
+            this->forwardLeft(pwm_perc);
+        }
+        void backward(int pwm_perc){
+            this->backward(pwm_perc);
+        }
+        void backwardRight(int pwm_perc){
+            this->backwardRight(pwm_perc);
+        }
+        void backwardLeft(int pwm_perc){
+            this->backwardLeft(pwm_perc);
+        }
+        void rotateRight(){
+            this->rotateRight();
+        }
+        void rotateLeft(){
+            this->rotateLeft();
+        }
+        void brake(){
+            this->brake();
+        }
     private:
         //---------- INTERNAL PROPERTIES ----------//
         float _ultrasonicDistances[static_cast<int>(UltrasonicPosition::COUNT)];
