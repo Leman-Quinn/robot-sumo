@@ -16,6 +16,8 @@ class Driver {
         void forwardRight(int pwm_perc);
         void forwardLeft(int pwm_perc);
         void backward(int pwm_perc);
+        void backwardRight(int pwm_perc);
+        void backwardLeft(int pwm_perc);
         void rotateRight();
         void rotateLeft();
         void brake();

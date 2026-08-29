@@ -184,6 +184,14 @@ void Robot::backward(int pwm_percentage){
     _driver.backward(pwm_percentage);
 }
 
+void Robot::backwardRight(int pwm_percentage){
+    _driver.backwardRight(pwm_percentage);
+}
+
+void Robot::backwardLeft(int pwm_percentage){
+    _driver.backwardLeft(pwm_percentage);
+}
+
 void Robot::rotateRight(){
     _driver.rotateRight();
 }

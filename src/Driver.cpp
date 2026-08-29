@@ -55,6 +55,26 @@ void Driver::backward(int pwm_perc){
     analogWrite(_pwmb, pwm_raw);
 }
 
+void Driver::backwardRight(int pwm_perc){
+    _leftMotor.backward();
+    _rightMotor.backward();
+
+    int pwm_raw = (pwm_perc*255)/100; // pwm for the right motor
+
+    analogWrite(_pwma, 255); // the left motor has to have 255 pwm
+    analogWrite(_pwmb, pwm_raw); // right motor
+}
+
+void Driver::backwardLeft(int pwm_perc){
+    _leftMotor.backward();
+    _rightMotor.backward();
+
+    int pwm_raw = (pwm_perc*255)/100; // pwm for the left motor
+
+    analogWrite(_pwma, pwm_raw); // left motor
+    analogWrite(_pwmb, 255); // the right motor has to have 255 pwm
+}
+
 void Driver::rotateRight(){
     _leftMotor.forward();
     _rightMotor.backward();

@@ -66,6 +66,8 @@ class Robot {
         void forwardRight(int pwm_percentage);
         void forwardLeft(int pwm_percentage);
         void backward(int pwm_percentage);
+        void backwardRight(int pwm_percentage);
+        void backwardLeft(int pwm_percentage);
         void rotateRight();
         void rotateLeft();
         void brake();
