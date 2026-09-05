@@ -42,15 +42,6 @@ class Robot {
         //-----------------------------//
 
         //-------- FOR TESTING (ACT) INTERNAL HELPERS--------//
-        void forward(int pwm_percentage);
-        void forwardRight(int pwm_percentage);
-        void forwardLeft(int pwm_percentage);
-        void backward(int pwm_percentage);
-        void backwardRight(int pwm_percentage);
-        void backwardLeft(int pwm_percentage);
-        void rotateRight();
-        void rotateLeft();
-        void brake();
 
     private:
         //---------- INTERNAL PROPERTIES ----------//
@@ -74,7 +65,15 @@ class Robot {
         //----------------------------------------------//
 
         //---------- (ACT) INTERNAL HELPERS ----------//
-        // (here goes the methods for act. they are in the public space of the class)
+        void forward(int pwm_percentage);
+        void forwardRight(int pwm_percentage);
+        void forwardLeft(int pwm_percentage);
+        void backward(int pwm_percentage);
+        void backwardRight(int pwm_percentage);
+        void backwardLeft(int pwm_percentage);
+        void rotateRight();
+        void rotateLeft();
+        void brake();
         //--------------------------------------------//
 
         //---------- DEBUGGING ----------//
