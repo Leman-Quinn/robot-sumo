@@ -35,6 +35,8 @@ void loop() {
     } else if((timer > 3000) && (timer <= 4000)){ // general timer (until 4000 milliseconds - 4 seconds)
         robot.forward(25); 
         timer = millis();
+    } else{
+        timer = 0;
     }
     
 }
