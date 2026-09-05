@@ -23,50 +23,18 @@ void loop() {
     
     static unsigned long timer = 0;
 
-    if((millis() - timer) <= 1000){ // until 1000 milliseconds (1 second)
+    if(timer <= 1000){ // general timer (until 1000 milliseconds - 1 second)
         robot.forward(100);
         timer = millis();
-    } 
-
-    if((millis() - timer) <= 1000){ // until 1000 milliseconds (1 second)
-        robot.forwardRight(50);
+    } else if((timer > 1000) && (timer <= 2000)){ // general timer (until 2000 milliseconds - 2 seconds)
+        robot.forward(75);
         timer = millis();
-    } 
-
-    if((millis() - timer) <= 1000){ // until 1000 milliseconds (1 second)
-        robot.forwardLeft(50);
+    } else if((timer > 2000) && (timer <= 3000)){ // general timer (until 3000 milliseconds - 3 seconds)
+        robot.forward(50);
         timer = millis();
-    } 
-
-    if((millis() - timer) <= 1000){ // until 1000 milliseconds (1 second)
-        robot.backward(100);
+    } else if((timer > 3000) && (timer <= 4000)){ // general timer (until 4000 milliseconds - 4 seconds)
+        robot.forward(25); 
         timer = millis();
-    } 
-
-    if((millis() - timer) <= 1000){ // until 1000 milliseconds (1 second)
-        robot.backwardRight(50);
-        timer = millis();
-    } 
-
-    if((millis() - timer) <= 1000){ // until 1000 milliseconds (1 second)
-        robot.backwardLeft(50);
-        timer = millis();
-    } 
-
-    if((millis() - timer) <= 1000){ // until 1000 milliseconds (1 second)
-        robot.rotateRight();
-        timer = millis();
-    } 
-
-    if((millis() - timer) <= 1000){ // until 1000 milliseconds (1 second)
-        robot.rotateLeft();
-        timer = millis();
-    } 
-
-    if((millis() - timer) <= 1000){ // until 1000 milliseconds (1 second)
-        robot.brake();
-        timer = millis();
-    } 
-
-    // continue testing with the public test methods of the Robot class.
+    }
+    
 }
