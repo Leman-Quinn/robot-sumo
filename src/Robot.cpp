@@ -197,14 +197,14 @@ void Robot::brake(){
 //-------------------------------//
 
 
-//---------- TESTING ----------//
+//---------- TESTING/DEBUGGING TOOL ----------//
 float Robot::front_deadband() {
     // Deadband & correction filter
     float frontLeftDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_LEFT);
     float frontRightDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_RIGHT);
     float frontDbFactor = frontLeftDistance - frontRightDistance;
 
-    Serial.begin(9600);
+    // Serial.begin(9600); --> it is already in setup(), so this one should not be here permanently.
     Serial.print("FL: ");
     Serial.print(frontLeftDistance);
     Serial.print(" | ");
@@ -228,6 +228,6 @@ float Robot::front_deadband() {
         Serial.println("STEER RIGHT");
     }
 
-    delay(500);
+    // delay(500); --> it can cause the robot to get stuck for half a second. 
 //-------------------------------//
 }
