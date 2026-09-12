@@ -67,38 +67,8 @@ void Robot::think(){
     // Determine where the enemy is
     updateEnemyPosition();
 
-    // 4. Changes the state and action
-    switch (_enemyPosition)
-    {
-        case EnemyPosition::FRONT:
-            _state = State::ATTACK;
-            _action = Action::FORWARD;
-            break;
-        case EnemyPosition::FRONT_LEFT:
-            _state = State::ATTACK;
-            _action = Action::FORWARD;
-            break;
-        case EnemyPosition::FRONT_RIGHT:
-            _state = State::ATTACK;
-            _action = Action::FORWARD;
-            break;   
-        case EnemyPosition::LEFT:
-            _state = State::ALIGN;
-            _action = Action::ROTATE_LEFT;
-            break;
-        case EnemyPosition::RIGHT:
-            _state = State::ALIGN;
-            _action = Action::ROTATE_RIGHT;
-            break;
-        case EnemyPosition::NONE:
-            _state = State::SEARCH;
-            _action = Action::BRAKE;
-            break;
-        default:
-            _state = State::SEARCH;
-            _action = Action::BRAKE;
-            break;
-    }
+    // Apply the strategy
+    Strategies::basic(*this); // "*this" is this very robot, that it is incorporated into the strategy 
 }
 
 void Robot::act(){
