@@ -1,5 +1,6 @@
 #include "config.h"
 #include "Robot.h"
+#include "Strategies.h"
 
 //---------- CONSTRUCTOR ----------//
 Robot::Robot(
@@ -63,45 +64,8 @@ void Robot::sense(){
 }
 
 void Robot::think(){
-    // 1. Checks raw sensor readings
-    float leftDistance = getUltrasonicDistance(UltrasonicPosition::LEFT);
-    float frontLeftDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_LEFT);
-    float frontRightDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_RIGHT);
-    float rightDistance = getUltrasonicDistance(UltrasonicPosition::RIGHT);
-
-    // 2. Distance threshold filter
-    bool targetOnLeft = leftDistance < MAX_ENEMY_DISTANCE;
-    bool targetOnFrontLeft = frontLeftDistance < MAX_ENEMY_DISTANCE;
-    bool targetOnFront = (frontLeftDistance < MAX_ENEMY_DISTANCE) && (frontRightDistance < MAX_ENEMY_DISTANCE);
-    bool targetOnFrontRight = frontRightDistance < MAX_ENEMY_DISTANCE;
-    bool targetOnRight = rightDistance < MAX_ENEMY_DISTANCE;
-
-    front_deadband();
-
-    // 3. Registers enemy position
-    if (targetOnFront)
-    {
-        setEnemyPosition(EnemyPosition::FRONT);
-    }
-    else if (targetOnFrontLeft)
-    {
-        setEnemyPosition(EnemyPosition::FRONT_LEFT);
-    }
-    else if (targetOnFrontRight)
-    {
-        setEnemyPosition(EnemyPosition::FRONT_RIGHT);
-    }
-    else if (targetOnLeft)
-    {
-        setEnemyPosition(EnemyPosition::LEFT);
-    }
-    else if (targetOnRight)
-    {
-        setEnemyPosition(EnemyPosition::RIGHT);
-    }
-    else{
-        setEnemyPosition(EnemyPosition::NONE);
-    }
+    // Determine where the enemy is
+    updateEnemyPosition();
 
     // 4. Changes the state and action
     switch (_enemyPosition)
@@ -160,7 +124,7 @@ void Robot::act(){
 }
 //-----------------------------//
 
-//------- INTERNAL HELPERS -------//
+//------- (SENSE) INTERNAL HELPERS -------//
 void Robot::updateUltrasonicSensors(){
     _ultrasonicDistances[static_cast<int>(UltrasonicPosition::LEFT)] = _leftUltrasonic.readDistance();
     _ultrasonicDistances[static_cast<int>(UltrasonicPosition::FRONT_LEFT)] = _frontLeftUltrasonic.readDistance();
@@ -168,6 +132,50 @@ void Robot::updateUltrasonicSensors(){
     _ultrasonicDistances[static_cast<int>(UltrasonicPosition::RIGHT)] = _rightUltrasonic.readDistance();
 }
 
+//------- (THINK) INTERNAL HELPERS -------//
+void Robot::updateEnemyPosition(){
+    // 1. Checks raw sensor readings
+    float leftDistance = getUltrasonicDistance(UltrasonicPosition::LEFT);
+    float frontLeftDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_LEFT);
+    float frontRightDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_RIGHT);
+    float rightDistance = getUltrasonicDistance(UltrasonicPosition::RIGHT);
+
+    // 2. Distance threshold filter
+    bool targetOnLeft = leftDistance < MAX_ENEMY_DISTANCE;
+    bool targetOnFrontLeft = frontLeftDistance < MAX_ENEMY_DISTANCE;
+    bool targetOnFront = (frontLeftDistance < MAX_ENEMY_DISTANCE) && (frontRightDistance < MAX_ENEMY_DISTANCE);
+    bool targetOnFrontRight = frontRightDistance < MAX_ENEMY_DISTANCE;
+    bool targetOnRight = rightDistance < MAX_ENEMY_DISTANCE;
+
+    front_deadband();
+
+    // 3. Registers enemy position
+    if (targetOnFront)
+    {
+        setEnemyPosition(EnemyPosition::FRONT);
+    }
+    else if (targetOnFrontLeft)
+    {
+        setEnemyPosition(EnemyPosition::FRONT_LEFT);
+    }
+    else if (targetOnFrontRight)
+    {
+        setEnemyPosition(EnemyPosition::FRONT_RIGHT);
+    }
+    else if (targetOnLeft)
+    {
+        setEnemyPosition(EnemyPosition::LEFT);
+    }
+    else if (targetOnRight)
+    {
+        setEnemyPosition(EnemyPosition::RIGHT);
+    }
+    else{
+        setEnemyPosition(EnemyPosition::NONE);
+    }
+}
+
+//------- (ACT) INTERNAL HELPERS -------//
 void Robot::forward(int pwm_percentage){
     _driver.forward(pwm_percentage);
 }
