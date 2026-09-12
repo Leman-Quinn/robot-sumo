@@ -29,7 +29,7 @@ class Robot {
         State getState();
         void setState(State state);
 
-        enum class Action{FORWARD, BACKWARD, BRAKE, ROTATE_LEFT, ROTATE_RIGHT};
+        enum class Action{FORWARD, FORWARD_LEFT, FORWARD_RIGHT, BACKWARD, BACKWARD_LEFT, BACKWARD_RIGHT, BRAKE, ROTATE_LEFT, ROTATE_RIGHT};
         Action getAction();
         void setAction(Action action);
         //-------------------------------//

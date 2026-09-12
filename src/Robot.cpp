@@ -78,8 +78,20 @@ void Robot::act(){
         case Action::FORWARD:
             forward(100); // the percentage can change
             break;
+        case Action::FORWARD_LEFT:
+            forwardLeft(50);
+            break;
+        case Action::FORWARD_RIGHT:
+            forwardRight(50);
+            break;
         case Action::BACKWARD:
             backward(100); // the percentage can change
+            break;
+         case Action::BACKWARD_LEFT:
+            backwardLeft(50);
+            break;
+        case Action::BACKWARD_RIGHT:
+            backwardRight(50);
             break;
         case Action::BRAKE:
             brake();

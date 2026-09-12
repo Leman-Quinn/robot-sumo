@@ -5,6 +5,12 @@ class Robot; // forward declaration. (It is not necessary to declare #include "R
 
 namespace Strategies {
     void basic(Robot& robot);
+
+    /*
+    void flankLeft(Robot& robot);
+    void flankRight(Robot& robot);
+    void searchAndAttack(Robot& robot);
+    */
 }
 
 #endif

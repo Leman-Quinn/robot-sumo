@@ -14,13 +14,13 @@ namespace Strategies {
                 break;
 
             case Robot::EnemyPosition::FRONT_LEFT:
-                robot.setState(Robot::State::ALIGN);
-                robot.setAction(Robot::Action::ROTATE_LEFT);
+                robot.setState(Robot::State::ATTACK);
+                robot.setAction(Robot::Action::FORWARD_LEFT);
                 break;
 
             case Robot::EnemyPosition::FRONT_RIGHT:
-                robot.setState(Robot::State::ALIGN);
-                robot.setAction(Robot::Action::ROTATE_RIGHT);
+                robot.setState(Robot::State::ATTACK);
+                robot.setAction(Robot::Action::FORWARD_RIGHT);
                 break;
 
              case Robot::EnemyPosition::LEFT:
