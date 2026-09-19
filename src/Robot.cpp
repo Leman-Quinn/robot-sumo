@@ -68,7 +68,7 @@ void Robot::think(){
     updateEnemyPosition();
 
     // Apply the strategy
-    Strategies::basic(*this); // "*this" is this very robot, that it is incorporated into the strategy 
+    Strategies::searchAndAttack(*this); // "*this" is this very robot, that it is incorporated into the strategy 
 }
 
 void Robot::act(){

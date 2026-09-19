@@ -3,7 +3,7 @@
 
 namespace Strategies {
 
-    void basic(Robot& robot) {
+    void searchAndAttack(Robot& robot) {
         
         // Changes the state and action
         switch (robot.getEnemyPosition()) {
@@ -30,11 +30,6 @@ namespace Strategies {
 
             case Robot::EnemyPosition::RIGHT:
                 robot.setState(Robot::State::ALIGN);
-                robot.setAction(Robot::Action::ROTATE_RIGHT);
-                break;
-
-            case Robot::EnemyPosition::NONE:
-                robot.setState(Robot::State::SEARCH);
                 robot.setAction(Robot::Action::ROTATE_RIGHT);
                 break;
 
