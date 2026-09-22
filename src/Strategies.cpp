@@ -40,25 +40,4 @@ namespace Strategies {
         }
     }
 
-    void forwardRotateReturn(Robot& robot){
-        int timer = 0;
-        while(timer<4500){
-            while(timer<2000){
-                robot.setState(Robot::State::ATTACK);
-                robot.setAction(Robot::Action::FORWARD);
-                timer = millis();
-            }
-            while((timer>=2000)&&(timer<2500)){
-                robot.setState(Robot::State::ALIGN);
-                robot.setAction(Robot::Action::ROTATE_RIGHT);
-                timer = millis();
-            }
-            while((timer>=2500)&&(timer<4500)){
-                robot.setState(Robot::State::ATTACK);
-                robot.setAction(Robot::Action::FORWARD);
-                timer = millis();
-            }
-            timer = 0;
-        }
-    }
 }
