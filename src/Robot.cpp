@@ -15,8 +15,9 @@ Robot::Robot(
     _frontLeftUltrasonic(frontLeftTrigger, frontLeftEcho),
     _frontRightUltrasonic(frontRightTrigger, frontRightEcho),
     _rightUltrasonic(rightTrigger, rightEcho),
-    _driver(pol1, pol2, pwma, pol3, pol4, pwmb){
-
+    _driver(pol1, pol2, pwma, pol3, pol4, pwmb),
+    _strategies(*this)
+    {
     }
 //---------------------------------//
 
@@ -68,7 +69,7 @@ void Robot::think(){
     updateEnemyPosition();
 
     // Apply the strategy
-    Strategies::searchAndAttack(*this); // "*this" is this very robot, that it is incorporated into the strategy 
+    _strategies.searchAndAttack(); 
 }
 
 void Robot::act(){

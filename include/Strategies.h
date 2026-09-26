@@ -3,13 +3,20 @@
 
 class Robot; // forward declaration. (It is not necessary to declare #include "Robot.h" here in Strategies.h, but in Strategies.cpp)
 
-namespace Strategies {
-    void searchAndAttack(Robot& robot);
+class Strategies{
+    private:
+        Robot& _robot;
 
-    /* Future strategies:
-    void flankLeft(Robot& robot); --> attempts to approach and flank the enemy from its left side before attacking.
-    void flankRight(Robot& robot); --> attempts to approach and flank the enemy from its right side before attacking.
-    */
-}
+    public:
+        // CONSTRUCTOR
+        Strategies(Robot& robot);
+
+        // METHODS
+        void searchAndAttack();
+        /* Future strategies:
+        void flankLeft(); --> attempts to approach and flank the enemy from its left side before attacking.
+        void flankRight(); --> attempts to approach and flank the enemy from its right side before attacking.
+        */
+};
 
 #endif

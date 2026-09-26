@@ -3,6 +3,7 @@
 
 #include "UltrasonicSensor.h"
 #include "Driver.h"
+#include "Strategies.h" 
 
 class Robot {
     public:
@@ -54,6 +55,7 @@ class Robot {
         UltrasonicSensor _frontRightUltrasonic;
         UltrasonicSensor _rightUltrasonic;
         Driver _driver;
+        Strategies _strategies;
         //-----------------------------------------//
         
         //---------- (SENSE) INTERNAL HELPERS ----------//
