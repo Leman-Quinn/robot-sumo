@@ -53,7 +53,7 @@ class Robot {
         UltrasonicSensor _frontRightUltrasonic;
         UltrasonicSensor _rightUltrasonic;
         Driver _driver;
-        Strategies _strategies;
+        Strategy _strategies;
         //-----------------------------------------//
         
         //---------- SENSE HELPERS ----------//
