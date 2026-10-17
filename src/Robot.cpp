@@ -107,7 +107,7 @@ void Robot::act(){
 }
 //-----------------------------//
 
-//------- (SENSE) INTERNAL HELPERS -------//
+//------- SENSE HELPERS -------//
 void Robot::updateUltrasonicSensors(){
     _ultrasonicDistances[static_cast<int>(UltrasonicPosition::LEFT)] = _leftUltrasonic.readDistance();
     _ultrasonicDistances[static_cast<int>(UltrasonicPosition::FRONT_LEFT)] = _frontLeftUltrasonic.readDistance();
@@ -115,7 +115,7 @@ void Robot::updateUltrasonicSensors(){
     _ultrasonicDistances[static_cast<int>(UltrasonicPosition::RIGHT)] = _rightUltrasonic.readDistance();
 }
 
-//------- (THINK) INTERNAL HELPERS -------//
+//------- THINK HELPERS -------//
 void Robot::updateEnemyPosition(){
     // 1. Checks raw sensor readings
     float leftDistance = getUltrasonicDistance(UltrasonicPosition::LEFT);
@@ -158,7 +158,7 @@ void Robot::updateEnemyPosition(){
     }
 }
 
-//------- (ACT) INTERNAL HELPERS -------//
+//------- ACT HELPERS -------//
 void Robot::forward(int pwm_percentage){
     _driver.forward(pwm_percentage);
 }
@@ -198,14 +198,13 @@ void Robot::brake(){
 //-------------------------------//
 
 
-//---------- TESTING/DEBUGGING TOOL ----------//
+//---------- DEBUGGING TOOL ----------//
 float Robot::front_deadband() {
     // Deadband & correction filter
     float frontLeftDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_LEFT);
     float frontRightDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_RIGHT);
     float frontDbFactor = frontLeftDistance - frontRightDistance;
 
-    // Serial.begin(9600); --> it is already in setup(), so this one should not be here permanently.
     Serial.print("FL: ");
     Serial.print(frontLeftDistance);
     Serial.print(" | ");
@@ -229,6 +228,5 @@ float Robot::front_deadband() {
         Serial.println("STEER RIGHT");
     }
 
-    // delay(500); --> it can cause the robot to get stuck for half a second. 
-//-------------------------------//
+    delay(500); 
 }

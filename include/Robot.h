@@ -42,10 +42,8 @@ class Robot {
         void act();
         //-----------------------------//
 
-        //-------- FOR TESTING (ACT) INTERNAL HELPERS--------//
-
     private:
-        //---------- INTERNAL PROPERTIES ----------//
+        //---------- PROPERTIES ----------//
         float _ultrasonicDistances[static_cast<int>(UltrasonicPosition::COUNT)];
         EnemyPosition _enemyPosition = EnemyPosition::NONE;
         State _state = State::SEARCH;
@@ -58,15 +56,15 @@ class Robot {
         Strategies _strategies;
         //-----------------------------------------//
         
-        //---------- (SENSE) INTERNAL HELPERS ----------//
+        //---------- SENSE HELPERS ----------//
         void updateUltrasonicSensors();
         //----------------------------------------------//
 
-        //---------- (THINK) INTERNAL HELPERS ----------//
+        //---------- THINK HELPERS ----------//
         void updateEnemyPosition();
         //----------------------------------------------//
 
-        //---------- (ACT) INTERNAL HELPERS ----------//
+        //---------- ACT HELPERS ----------//
         void forward(int pwm_percentage);
         void forwardRight(int pwm_percentage);
         void forwardLeft(int pwm_percentage);

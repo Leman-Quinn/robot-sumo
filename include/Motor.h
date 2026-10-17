@@ -9,7 +9,6 @@ class Motor {
         Motor(uint8_t pol1, uint8_t pol2);
 
         //---------- METHODS ----------//
-        // initializes pin modes
         void begin();
         void forward();
         void backward();

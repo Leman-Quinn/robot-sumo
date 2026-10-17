@@ -8,8 +8,7 @@ class UltrasonicSensor{
         //---------- CONSTRUCTOR ----------//
         UltrasonicSensor(uint8_t trigger, uint8_t echo);
         
-        //---------- GENERAL METHODS ----------//
-        // initializes pin modes
+        //---------- METHODS ----------//
         void begin();
 
         // values returned in cm
