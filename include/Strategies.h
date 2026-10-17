@@ -3,13 +3,10 @@
 
 class Robot; // forward declaration. (It is not necessary to declare #include "Robot.h" here in Strategies.h, but in Strategies.cpp)
 
-class Strategies{
-    private:
-        Robot& _robot;
-
+class Strategy{
     public:
         // CONSTRUCTOR
-        Strategies(Robot& robot);
+        Strategy(Robot& robot);
 
         // METHODS
         void searchAndAttack();
@@ -17,6 +14,8 @@ class Strategies{
         void flankLeft(); --> attempts to approach and flank the enemy from its left side before attacking.
         void flankRight(); --> attempts to approach and flank the enemy from its right side before attacking.
         */
+    private:
+        Robot& _robot;
 };
 
 #endif
