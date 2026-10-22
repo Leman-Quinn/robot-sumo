@@ -14,8 +14,7 @@ Robot::Robot(
     _frontLeftUltrasonic(frontLeftTrigger, frontLeftEcho),
     _frontRightUltrasonic(frontRightTrigger, frontRightEcho),
     _rightUltrasonic(rightTrigger, rightEcho),
-    _driver(pol1, pol2, pwma, pol3, pol4, pwmb),
-    _strategies(*this)
+    _driver(pol1, pol2, pwma, pol3, pol4, pwmb)
     {
     }
 //---------------------------------//
