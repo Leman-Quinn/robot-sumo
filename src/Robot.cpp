@@ -130,8 +130,6 @@ void Robot::updateEnemyPosition(){
     bool targetOnFrontRight = frontRightDistance < MAX_ENEMY_DISTANCE;
     bool targetOnRight = rightDistance < MAX_ENEMY_DISTANCE;
 
-    front_deadband();
-
     // 3. Registers enemy position
     if (targetOnFront)
     {
@@ -194,39 +192,4 @@ void Robot::rotateLeft(){
 void Robot::brake(){
     _driver.brake();
 }
-
 //-------------------------------//
-
-
-//---------- DEBUGGING TOOL ----------//
-float Robot::front_deadband() {
-    // Deadband & correction filter
-    float frontLeftDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_LEFT);
-    float frontRightDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_RIGHT);
-    float frontDbFactor = frontLeftDistance - frontRightDistance;
-
-    Serial.print("FL: ");
-    Serial.print(frontLeftDistance);
-    Serial.print(" | ");
-    Serial.print("FR: ");
-    Serial.print(frontRightDistance);
-    Serial.print(" | ");
-    Serial.print("DIFF: ");
-    Serial.print(frontDbFactor);
-    Serial.print(" | ");
-    
-    if ((frontDbFactor >= -5) && (frontDbFactor <= 5)) 
-    {
-        Serial.println("NO ALIGNMENT");
-    }
-    else if (frontDbFactor < -5)
-    {
-        Serial.println("STEER LEFT");
-    }
-    else if (frontDbFactor > 5)
-    {
-        Serial.println("STEER RIGHT");
-    }
-
-    delay(500); 
-}
