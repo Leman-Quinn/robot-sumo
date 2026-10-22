@@ -1,6 +1,5 @@
 #include "config.h"
 #include "Robot.h"
-#include "Strategies.h"
 
 //---------- CONSTRUCTOR ----------//
 Robot::Robot(
@@ -194,7 +193,6 @@ void Robot::rotateLeft(){
 void Robot::brake(){
     _driver.brake();
 }
-
 //-------------------------------//
 
 
@@ -230,3 +228,4 @@ float Robot::front_deadband() {
 
     delay(500); 
 }
+//-------------------------------//
