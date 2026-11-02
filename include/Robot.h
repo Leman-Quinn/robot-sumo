@@ -60,6 +60,8 @@ class Robot {
 
         //---------- THINK HELPERS ----------//
         void updateEnemyPosition();
+        void updateState();
+        void updateAction();
         //----------------------------------------------//
 
         //---------- ACT HELPERS ----------//
@@ -73,9 +75,6 @@ class Robot {
         void rotateLeft();
         void brake();
         //--------------------------------------------//
-
-        //---------- DEBUGGING ----------//
-        void front_deadband();
 };
 
 #endif

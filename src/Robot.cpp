@@ -64,14 +64,16 @@ void Robot::sense(){
 
 void Robot::think(){
     updateEnemyPosition();
+    updateState();
+    updateAction();
 }
 
 void Robot::act(){
-    // Translates action into motor commands
+    // Translates actions into motor commands
     switch (_action)
     {
         case Action::FORWARD:
-            forward(100); // the percentage can change
+            forward(100);
             break;
         case Action::FORWARD_LEFT:
             forwardLeft(50);
@@ -80,7 +82,7 @@ void Robot::act(){
             forwardRight(50);
             break;
         case Action::BACKWARD:
-            backward(100); // the percentage can change
+            backward(100);
             break;
          case Action::BACKWARD_LEFT:
             backwardLeft(50);
@@ -115,22 +117,19 @@ void Robot::updateUltrasonicSensors(){
 
 //------- THINK HELPERS -------//
 void Robot::updateEnemyPosition(){
-    // 1. Checks raw sensor readings
+    // 1. Fetches ultrasonic readings
     float leftDistance = getUltrasonicDistance(UltrasonicPosition::LEFT);
     float frontLeftDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_LEFT);
     float frontRightDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_RIGHT);
     float rightDistance = getUltrasonicDistance(UltrasonicPosition::RIGHT);
-
-    // 2. Distance threshold filter
+    // 2. Sets flags for max detection
     bool targetOnLeft = leftDistance < MAX_ENEMY_DISTANCE;
     bool targetOnFrontLeft = frontLeftDistance < MAX_ENEMY_DISTANCE;
     bool targetOnFront = (frontLeftDistance < MAX_ENEMY_DISTANCE) && (frontRightDistance < MAX_ENEMY_DISTANCE);
     bool targetOnFrontRight = frontRightDistance < MAX_ENEMY_DISTANCE;
     bool targetOnRight = rightDistance < MAX_ENEMY_DISTANCE;
 
-    front_deadband();
-
-    // 3. Registers enemy position
+    // 3. Updates enemy position
     if (targetOnFront)
     {
         setEnemyPosition(EnemyPosition::FRONT);
@@ -153,6 +152,59 @@ void Robot::updateEnemyPosition(){
     }
     else{
         setEnemyPosition(EnemyPosition::NONE);
+    }
+}
+
+void updateState(){
+    switch (_enemyPosition)
+    {
+        case EnemyPosition::FRONT:
+            setState(State::ATTACK);
+            break;
+        case EnemyPosition::FRONT_RIGHT:
+            setState(State::ALIGN);
+            break;
+        case EnemyPosition::FRONT_LEFT:
+            setState(State::ALIGN);
+            break;
+        case EnemyPosition::LEFT:
+            setState(State::SEARCH);
+            break;
+        case EnemyPosition::RIGHT:
+            setState(State::SEARCH);
+            break;
+        case EnemyPosition::NONE:
+            setState(State::SEARCH);
+            break;
+    }
+}
+
+void updateAction(){
+    float frontLeftDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_LEFT);
+    float frontRightDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_RIGHT);
+    float factor = frontLeftDistance - frontRightDistance;
+    
+    switch (_state)
+    {
+        case State::ATTACK:
+            setAction(Action::FORWARD);
+            break;
+        case State::ALIGN:
+            if (factor < -5)
+                {
+                    // Align left
+                    setAction(Action::FORWARD_LEFT);
+                }
+                else if (factor > 5)
+                {
+                    // Align right
+                    setAction(Action::FORWARD_RIGHT);
+                }
+            break;
+        case State::SEARCH:
+            // To be replaced with CUSTOM STRATEGIES
+            setAction(Action::ROTATE_LEFT);
+            break;
     }
 }
 
@@ -191,39 +243,5 @@ void Robot::rotateLeft(){
 
 void Robot::brake(){
     _driver.brake();
-}
-//-------------------------------//
-
-//---------- DEBUGGING ----------//
-void Robot::front_deadband() {
-    // Deadband & correction filter
-    float frontLeftDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_LEFT);
-    float frontRightDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_RIGHT);
-    float frontDBFactor = frontLeftDistance - frontRightDistance;
-
-    Serial.print("FL: ");
-    Serial.print(frontLeftDistance);
-    Serial.print(" | ");
-    Serial.print("FR: ");
-    Serial.print(frontRightDistance);
-    Serial.print(" | ");
-    Serial.print("DIFF: ");
-    Serial.print(frontDBFactor);
-    Serial.print(" | ");
-    
-    if ((frontDBFactor >= -5) && (frontDBFactor <= 5)) 
-    {
-        Serial.println("NO ALIGNMENT");
-    }
-    else if (frontDBFactor < -5)
-    {
-        Serial.println("STEER LEFT");
-    }
-    else if (frontDBFactor > 5)
-    {
-        Serial.println("STEER RIGHT");
-    }
-
-    delay(500); 
 }
 //-------------------------------//
