@@ -63,11 +63,7 @@ void Robot::sense(){
 }
 
 void Robot::think(){
-    // Determine where the enemy is
     updateEnemyPosition();
-
-    // Apply the strategy
-    _strategies.searchAndAttack(); 
 }
 
 void Robot::act(){
@@ -108,9 +104,13 @@ void Robot::act(){
 //------- SENSE HELPERS -------//
 void Robot::updateUltrasonicSensors(){
     _ultrasonicDistances[static_cast<int>(UltrasonicPosition::LEFT)] = _leftUltrasonic.readDistance();
+    delay(80);
     _ultrasonicDistances[static_cast<int>(UltrasonicPosition::FRONT_LEFT)] = _frontLeftUltrasonic.readDistance();
+    delay(80);
     _ultrasonicDistances[static_cast<int>(UltrasonicPosition::FRONT_RIGHT)] = _frontRightUltrasonic.readDistance();
+    delay(80);
     _ultrasonicDistances[static_cast<int>(UltrasonicPosition::RIGHT)] = _rightUltrasonic.readDistance();
+    delay(80);
 }
 
 //------- THINK HELPERS -------//
@@ -194,13 +194,12 @@ void Robot::brake(){
 }
 //-------------------------------//
 
-
-//---------- DEBUGGING TOOL ----------//
-float Robot::front_deadband() {
+//---------- DEBUGGING ----------//
+void Robot::front_deadband() {
     // Deadband & correction filter
     float frontLeftDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_LEFT);
     float frontRightDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_RIGHT);
-    float frontDbFactor = frontLeftDistance - frontRightDistance;
+    float frontDBFactor = frontLeftDistance - frontRightDistance;
 
     Serial.print("FL: ");
     Serial.print(frontLeftDistance);
@@ -209,18 +208,18 @@ float Robot::front_deadband() {
     Serial.print(frontRightDistance);
     Serial.print(" | ");
     Serial.print("DIFF: ");
-    Serial.print(frontDbFactor);
+    Serial.print(frontDBFactor);
     Serial.print(" | ");
     
-    if ((frontDbFactor >= -5) && (frontDbFactor <= 5)) 
+    if ((frontDBFactor >= -5) && (frontDBFactor <= 5)) 
     {
         Serial.println("NO ALIGNMENT");
     }
-    else if (frontDbFactor < -5)
+    else if (frontDBFactor < -5)
     {
         Serial.println("STEER LEFT");
     }
-    else if (frontDbFactor > 5)
+    else if (frontDBFactor > 5)
     {
         Serial.println("STEER RIGHT");
     }

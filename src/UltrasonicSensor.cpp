@@ -18,23 +18,24 @@ float UltrasonicSensor::readDistance(){
 
     // sets trigger to low to avoid dangling
     digitalWrite(_trigger, LOW);
+    digitalWrite(_echo, LOW);
     delayMicroseconds(5);
 
     // sends wave for 10 microseconds burst
     digitalWrite(_trigger, HIGH);
-    delayMicroseconds(10);
+    delayMicroseconds(20);
     digitalWrite(_trigger, LOW);
-
+ 
     // receives wave
     duration = pulseIn(_echo, HIGH, 30000);
-
-    // converts to cm 
+    
+    // converts to cm
     distance = (duration*0.0343)/2;
 
     if (distance == 0)
     {
         return -1;
     }
-  
+
     return distance; 
 }

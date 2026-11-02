@@ -75,7 +75,7 @@ class Robot {
         //--------------------------------------------//
 
         //---------- DEBUGGING ----------//
-        float front_deadband();
+        void front_deadband();
 };
 
 #endif

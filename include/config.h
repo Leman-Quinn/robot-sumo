@@ -5,26 +5,26 @@
 // ---------- GENERAL VARIABLES ----------//
 constexpr float MAX_ENEMY_DISTANCE = 20;
 
-// ---------- INFRARED PINS ----------
+// ---------- INFRARED ----------
 
-// ---------- ULTRASONIC PINS ----------
+// ---------- ULTRASONIC ----------
 // LEFT SENSOR
-constexpr uint8_t TRI_L = A0;
-constexpr uint8_t ECHO_L = A1;
+constexpr uint8_t TRI_L = 32;
+constexpr uint8_t ECHO_L = 33;
 
 // FRONT LEFT SENSOR
-constexpr uint8_t TRI_FL = A2;
-constexpr uint8_t ECHO_FL = A3;
+constexpr uint8_t TRI_FL = 5;
+constexpr uint8_t ECHO_FL = 18;
 
 // FRONT RIGHT SENSOR
-constexpr uint8_t TRI_FR = A4;
-constexpr uint8_t ECHO_FR = A5;
+constexpr uint8_t TRI_FR = 2;
+constexpr uint8_t ECHO_FR = 4;
 
 // RIGHT SENSOR
-constexpr uint8_t TRI_R = 6;
-constexpr uint8_t ECHO_R = 7;
+constexpr uint8_t TRI_R = 16;
+constexpr uint8_t ECHO_R = 17;
 
-// ---------- DRIVER PINS ----------
+// ---------- DRIVER ----------
 constexpr uint8_t AIN1 = 2;
 constexpr uint8_t AIN2 = 3;
 constexpr uint8_t PWMA = 9;

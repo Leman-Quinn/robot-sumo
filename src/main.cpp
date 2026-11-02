@@ -18,6 +18,6 @@ void setup() {
 
 void loop() { 
     robot.sense();
-    robot.think();
-    robot.act();
+    // robot.think();
+    // robot.act();
 }
