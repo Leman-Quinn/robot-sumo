@@ -192,12 +192,12 @@ void updateAction(){
         case State::ALIGN:
             if (factor < -5)
                 {
-                    // Align left
+                    // Align to the left
                     setAction(Action::FORWARD_LEFT);
                 }
                 else if (factor > 5)
                 {
-                    // Align right
+                    // Align to the right
                     setAction(Action::FORWARD_RIGHT);
                 }
             break;
