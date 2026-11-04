@@ -28,9 +28,13 @@ void Strategy::searchAndAttack(){
             _robot.setState(Robot::State::ALIGN);
             _robot.setAction(Robot::Action::ROTATE_RIGHT);
             break;
-        default:
+        case Robot::EnemyPosition::NONE:
             _robot.setState(Robot::State::SEARCH);
             _robot.setAction(Robot::Action::ROTATE_RIGHT);
+            break;
+        default:
+            _robot.setState(Robot::State::SEARCH);
+            _robot.setAction(Robot::Action::BRAKE);
             break;
     }
 }
