@@ -1,5 +1,5 @@
-#ifndef STRATEGIES_H
-#define STRATEGIES_H
+#ifndef STRATEGY_H
+#define STRATEGY_H
 
 class Robot; // forward declaration. (It is not necessary to declare #include "Robot.h" here in Strategies.h, but in Strategies.cpp)
 

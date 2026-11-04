@@ -1,4 +1,4 @@
-#include "Strategies.h"
+#include "Strategy.h"
 #include "Robot.h" // here, it is indeed necessary to declare it
 
 Strategy::Strategy(Robot& robot) : _robot(robot)
