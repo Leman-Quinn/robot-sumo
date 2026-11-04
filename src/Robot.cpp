@@ -1,6 +1,6 @@
 #include "config.h"
 #include "Robot.h"
-#include "Strategies.h"
+#include "Strategy.h"
 
 //---------- CONSTRUCTOR ----------//
 Robot::Robot(
