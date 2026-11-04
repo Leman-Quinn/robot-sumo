@@ -124,11 +124,16 @@ void Robot::updateEnemyPosition(){
     float rightDistance = getUltrasonicDistance(UltrasonicPosition::RIGHT);
 
     // 2. Distance threshold filter
-    bool targetOnLeft = leftDistance < MAX_ENEMY_DISTANCE;
-    bool targetOnFrontLeft = frontLeftDistance < MAX_ENEMY_DISTANCE;
-    bool targetOnFront = (frontLeftDistance < MAX_ENEMY_DISTANCE) && (frontRightDistance < MAX_ENEMY_DISTANCE);
-    bool targetOnFrontRight = frontRightDistance < MAX_ENEMY_DISTANCE;
-    bool targetOnRight = rightDistance < MAX_ENEMY_DISTANCE;
+    bool targetOnLeft = leftDistance >= 0 && 
+                        leftDistance < MAX_ENEMY_DISTANCE;
+    bool targetOnFrontLeft = frontLeftDistance >= 0 && 
+                            frontLeftDistance < MAX_ENEMY_DISTANCE;
+    bool targetOnFrontRight = frontRightDistance >= 0 &&
+                            frontRightDistance < MAX_ENEMY_DISTANCE;
+    bool targetOnRight = rightDistance >= 0 && 
+                        rightDistance < MAX_ENEMY_DISTANCE;
+    bool targetOnFront = targetOnFrontLeft && targetOnFrontRight;
+
 
     // 3. Registers enemy position
     if (targetOnFront)
