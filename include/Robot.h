@@ -20,7 +20,7 @@ class Robot {
         //---------- INTERFACES ----------//
         enum class UltrasonicPosition {LEFT, FRONT_LEFT, FRONT_RIGHT, RIGHT, COUNT};
         float getUltrasonicDistance(UltrasonicPosition position);
-        
+
         enum class EnemyPosition{NONE, LEFT, FRONT_LEFT, FRONT, FRONT_RIGHT, RIGHT, COUNT};
         EnemyPosition getEnemyPosition();
         void setEnemyPosition(EnemyPosition enemyPosition);
@@ -47,11 +47,12 @@ class Robot {
         EnemyPosition _enemyPosition = EnemyPosition::NONE;
         State _state = State::SEARCH;
         Action _action = Action::BRAKE;
+        
+        Driver _driver;
         UltrasonicSensor _leftUltrasonic;
         UltrasonicSensor _frontLeftUltrasonic;
         UltrasonicSensor _frontRightUltrasonic;
         UltrasonicSensor _rightUltrasonic;
-        Driver _driver;
         //-----------------------------------------//
         
         //---------- SENSE HELPERS ----------//

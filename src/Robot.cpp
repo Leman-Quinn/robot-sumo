@@ -122,7 +122,8 @@ void Robot::updateEnemyPosition(){
     float frontLeftDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_LEFT);
     float frontRightDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_RIGHT);
     float rightDistance = getUltrasonicDistance(UltrasonicPosition::RIGHT);
-    // 2. Sets flags for max detection
+
+    // 2. Sets flags for potential enemy location based on max distance threshold
     bool targetOnLeft = leftDistance < MAX_ENEMY_DISTANCE;
     bool targetOnFrontLeft = frontLeftDistance < MAX_ENEMY_DISTANCE;
     bool targetOnFront = (frontLeftDistance < MAX_ENEMY_DISTANCE) && (frontRightDistance < MAX_ENEMY_DISTANCE);
@@ -150,7 +151,8 @@ void Robot::updateEnemyPosition(){
     {
         setEnemyPosition(EnemyPosition::RIGHT);
     }
-    else{
+    else
+    {
         setEnemyPosition(EnemyPosition::NONE);
     }
 }
