@@ -6,18 +6,19 @@
 class Motor {
     public:
         //---------- CONSTRUCTOR ----------//
-        Motor(uint8_t rpwm, uint8_t lpwm);
+        Motor(uint8_t rpwm, uint8_t lpwm, bool inverted = false);
 
         //---------- METHODS ----------//
         void begin();
-        void forward();
-        void backward();
+        void forward(int pwm);
+        void backward(int pwm);
         void brake();
     
     private:
         //---------- ATTRIBUTES ----------//
         uint8_t _rpwm;
         uint8_t _lpwm;
+        bool _inverted;
 };
 
 #endif

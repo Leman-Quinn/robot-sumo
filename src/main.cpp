@@ -6,8 +6,8 @@ Robot robot(
     TRI_FL, ECHO_FL,
     TRI_FR, ECHO_FR,
     TRI_R, ECHO_R,
-    AIN1, AIN2, PWMA, 
-    BIN1, BIN2, PWMB
+    RPWM_A, LPWM_A,
+    RPWM_B, LPWM_B
 );
 
 void setup() { 
@@ -21,5 +21,7 @@ void loop() {
     //robot.think();
     //robot.act();
 
-    
+    //------- DEBUGGING -------//
+    // STRAIGHT LINE AT MAX SPEED (100% PWM)
+    robot.testForward(255);
 }

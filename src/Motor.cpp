@@ -1,29 +1,48 @@
 #include "Motor.h"
 
 //---------- CONSTRUCTOR ----------//
-Motor::Motor(uint8_t rpwm, uint8_t lpwm):
+Motor::Motor(uint8_t rpwm, uint8_t lpwm, bool inverted):
     _rpwm(rpwm),
-    _lpwm(lpwm){
+    _lpwm(lpwm),
+    _inverted(inverted){
         
     }
 
 //---------- METHODS ----------//
 void Motor::begin(){
-    pinMode(_pol1, OUTPUT);
-    pinMode(_pol2, OUTPUT);
+    pinMode(_rpwm, OUTPUT);
+    pinMode(_lpwm, OUTPUT);
+    analogWrite(_rpwm, 0);
+    analogWrite(_lpwm, 0);
 }
 
-void Motor::forward(){
-    digitalWrite(_pol1, HIGH);
-    digitalWrite(_pol2, LOW);
+void Motor::forward(int pwm){
+    if (!_inverted)
+    {
+        analogWrite(_rpwm, pwm);
+        analogWrite(_lpwm, 0);
+    }
+    else
+    {
+        analogWrite(_rpwm, 0);
+        analogWrite(_lpwm, pwm);
+    }
 }
 
-void Motor::backward(){
-    digitalWrite(_pol1, LOW);
-    digitalWrite(_pol2, HIGH);
+void Motor::backward(int pwm){
+    if (!_inverted)
+    {
+        analogWrite(_rpwm, 0);
+        analogWrite(_lpwm, pwm);
+    }
+    else
+    {
+        analogWrite(_rpwm, pwm);
+        analogWrite(_lpwm, 0);
+    }
 }
 
 void Motor::brake(){
-    digitalWrite(_pol1, LOW);
-    digitalWrite(_pol2, LOW);
+    analogWrite(_rpwm, 0);
+    analogWrite(_lpwm, 0);
 }

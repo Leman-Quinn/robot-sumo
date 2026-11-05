@@ -12,8 +12,8 @@ class Robot {
             uint8_t frontLeftTrigger, uint8_t frontLeftEcho,
             uint8_t frontRightTrigger, uint8_t frontRightEcho,
             uint8_t rightTrigger, uint8_t rightEcho,
-            uint8_t pol1, uint8_t pol2, uint8_t pwma,
-            uint8_t pol3, uint8_t pol4, uint8_t pwmb
+            uint8_t rpwm_a, uint8_t lpwm_a,
+            uint8_t rpwm_b, uint8_t lpwm_b
         );
         //---------------------------------//
         
@@ -41,6 +41,13 @@ class Robot {
         void act();
         //-----------------------------//
 
+        //------- DEBUGGING -------//
+        void testForward(int pwm);
+        void testBackward(int pwm);
+        void testMixedMovements(int pwm);
+        //-------------------------------//
+
+
     private:
         //---------- PROPERTIES ----------//
         float _ultrasonicDistances[static_cast<int>(UltrasonicPosition::COUNT)];
@@ -48,11 +55,11 @@ class Robot {
         State _state = State::SEARCH;
         Action _action = Action::BRAKE;
         
-        Driver _driver;
         UltrasonicSensor _leftUltrasonic;
         UltrasonicSensor _frontLeftUltrasonic;
         UltrasonicSensor _frontRightUltrasonic;
         UltrasonicSensor _rightUltrasonic;
+        Driver _driver;
         //-----------------------------------------//
         
         //---------- SENSE HELPERS ----------//
@@ -66,14 +73,14 @@ class Robot {
         //----------------------------------------------//
 
         //---------- ACT HELPERS ----------//
-        void forward(int pwm_percentage);
-        void forwardRight(int pwm_percentage);
-        void forwardLeft(int pwm_percentage);
-        void backward(int pwm_percentage);
-        void backwardRight(int pwm_percentage);
-        void backwardLeft(int pwm_percentage);
-        void rotateRight();
-        void rotateLeft();
+        void forward(int pwm);
+        //void forwardRight(int pwm_percentage);
+        //void forwardLeft(int pwm_percentage);
+        void backward(int pwm);
+        //void backwardRight(int pwm_percentage);
+        //void backwardLeft(int pwm_percentage);
+        void rotateRight(int pwm);
+        void rotateLeft(int pwm);
         void brake();
         //--------------------------------------------//
 };

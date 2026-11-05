@@ -7,14 +7,14 @@ Robot::Robot(
     uint8_t frontLeftTrigger, uint8_t frontLeftEcho,
     uint8_t frontRightTrigger, uint8_t frontRightEcho,
     uint8_t rightTrigger, uint8_t rightEcho,
-    uint8_t pol1, uint8_t pol2, uint8_t pwma, 
-    uint8_t pol3, uint8_t pol4, uint8_t pwmb
+    uint8_t rpwm_a, uint8_t lpwm_a,
+    uint8_t rpwm_b, uint8_t lpwm_b
     ):
     _leftUltrasonic(leftTrigger, leftEcho),
     _frontLeftUltrasonic(frontLeftTrigger, frontLeftEcho),
     _frontRightUltrasonic(frontRightTrigger, frontRightEcho),
     _rightUltrasonic(rightTrigger, rightEcho),
-    _driver(pol1, pol2, pwma, pol3, pol4, pwmb)
+    _driver(rpwm_a, lpwm_a, rpwm_b, lpwm_b)
     {
     }
 //---------------------------------//
@@ -73,31 +73,31 @@ void Robot::act(){
     switch (_action)
     {
         case Action::FORWARD:
-            forward(100);
+            forward(255);
             break;
-        case Action::FORWARD_LEFT:
-            forwardLeft(50);
-            break;
-        case Action::FORWARD_RIGHT:
-            forwardRight(50);
-            break;
+        //case Action::FORWARD_LEFT:
+        //    forwardLeft(50);
+        //    break;
+        //case Action::FORWARD_RIGHT:
+        //    forwardRight(50);
+        //    break;
         case Action::BACKWARD:
-            backward(100);
+            backward(255);
             break;
-         case Action::BACKWARD_LEFT:
-            backwardLeft(50);
-            break;
-        case Action::BACKWARD_RIGHT:
-            backwardRight(50);
-            break;
+        //case Action::BACKWARD_LEFT:
+        //    backwardLeft(50);
+        //    break;
+        //case Action::BACKWARD_RIGHT:
+        //    backwardRight(50);
+        //    break;
         case Action::BRAKE:
             brake();
             break;
         case Action::ROTATE_LEFT:
-            rotateLeft();
+            rotateLeft(255);
             break;
         case Action::ROTATE_RIGHT:
-            rotateRight();
+            rotateRight(255);
             break;
     }
 }
@@ -157,35 +157,37 @@ void Robot::updateEnemyPosition(){
     }
 }
 
-void updateState(){
-    switch (_enemyPosition)
+void Robot::updateState(){
+    EnemyPosition currentEnemyPosition = getEnemyPosition();
+
+    switch (currentEnemyPosition)
     {
         case EnemyPosition::FRONT:
             setState(State::ATTACK);
             break;
-        case EnemyPosition::FRONT_RIGHT:
+        case Robot::EnemyPosition::FRONT_RIGHT:
             setState(State::ALIGN);
             break;
-        case EnemyPosition::FRONT_LEFT:
+        case Robot::EnemyPosition::FRONT_LEFT:
             setState(State::ALIGN);
             break;
-        case EnemyPosition::LEFT:
+        case Robot::EnemyPosition::LEFT:
             setState(State::SEARCH);
             break;
-        case EnemyPosition::RIGHT:
+        case Robot::EnemyPosition::RIGHT:
             setState(State::SEARCH);
             break;
-        case EnemyPosition::NONE:
+        case Robot::EnemyPosition::NONE:
             setState(State::SEARCH);
             break;
     }
 }
 
-void updateAction(){
+void Robot::updateAction(){
     float frontLeftDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_LEFT);
     float frontRightDistance = getUltrasonicDistance(UltrasonicPosition::FRONT_RIGHT);
     float factor = frontLeftDistance - frontRightDistance;
-    
+
     switch (_state)
     {
         case State::ATTACK:
@@ -211,10 +213,11 @@ void updateAction(){
 }
 
 //------- ACT HELPERS -------//
-void Robot::forward(int pwm_percentage){
-    _driver.forward(pwm_percentage);
+void Robot::forward(int pwm){
+    _driver.forward(pwm);
 }
 
+/*
 void Robot::forwardRight(int pwm_percentage){
     _driver.forwardRight(pwm_percentage);
 }
@@ -222,11 +225,13 @@ void Robot::forwardRight(int pwm_percentage){
 void Robot::forwardLeft(int pwm_percentage){
     _driver.forwardLeft(pwm_percentage);
 }
+*/
 
-void Robot::backward(int pwm_percentage){
-    _driver.backward(pwm_percentage);
+void Robot::backward(int pwm){
+    _driver.backward(pwm);
 }
 
+/*
 void Robot::backwardRight(int pwm_percentage){
     _driver.backwardRight(pwm_percentage);
 }
@@ -234,16 +239,53 @@ void Robot::backwardRight(int pwm_percentage){
 void Robot::backwardLeft(int pwm_percentage){
     _driver.backwardLeft(pwm_percentage);
 }
+*/
 
-void Robot::rotateRight(){
-    _driver.rotateRight();
+void Robot::rotateRight(int pwm){
+    _driver.rotateRight(pwm);
 }
 
-void Robot::rotateLeft(){
-    _driver.rotateLeft();
+void Robot::rotateLeft(int pwm){
+    _driver.rotateLeft(pwm);
 }
 
 void Robot::brake(){
     _driver.brake();
+}
+//-------------------------------//
+
+//------- DEBUGGING HELPERS -------//
+void Robot::testForward(int pwm){
+    _driver.forward(pwm);
+    delay(2000);
+    _driver.brake();
+}
+
+void Robot::testBackward(int pwm){
+    _driver.backward(pwm);
+    delay(2000);
+    _driver.brake();
+}
+
+void Robot::testMixedMovements(int pwm){
+    _driver.forward(pwm);
+    delay(2000);
+    _driver.brake();
+    delay(1000);
+
+    _driver.backward(pwm);
+    delay(2000);
+    _driver.brake();
+    delay(1000);
+
+    _driver.rotateLeft(pwm);
+    delay(2000);
+    _driver.brake();
+    delay(1000);
+    
+    _driver.rotateRight(pwm);
+    delay(2000);
+    _driver.brake();
+    delay(1000);
 }
 //-------------------------------//
