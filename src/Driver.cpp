@@ -1,13 +1,15 @@
 #include "Driver.h"
 
 //---------- CONSTRUCTOR ----------//
-Driver::Driver(uint8_t pol1, uint8_t pol2, uint8_t pwma,
-               uint8_t pol3, uint8_t pol4, uint8_t pwmb):
-               _leftMotor(pol1, pol2), _rightMotor(pol3, pol4){
-                this->_pwma = pwma;
-                this->_pwmb = pwmb;
-    
-}
+Driver::Driver(uint8_t rpwm_a, uint8_t lpwm_a,
+               uint8_t rpwm_b, uint8_t lpwm_b):
+               _leftMotor(rpwm_a, lpwm_a), _rightMotor(rpwm_b, lpwm_b)
+               {
+                this->_rpwm_a = rpwm_a;
+                this->_lpwm_a = lpwm_a;
+                this->_rpwm_b = rpwm_b;
+                this->_lpwm_b = lpwm_b;
+               }
 
 //---------- METHODS ----------//
 void Driver::begin(){

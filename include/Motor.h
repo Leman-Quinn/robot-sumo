@@ -6,7 +6,7 @@
 class Motor {
     public:
         //---------- CONSTRUCTOR ----------//
-        Motor(uint8_t pol1, uint8_t pol2);
+        Motor(uint8_t rpwm, uint8_t lpwm);
 
         //---------- METHODS ----------//
         void begin();
@@ -16,8 +16,8 @@ class Motor {
     
     private:
         //---------- ATTRIBUTES ----------//
-        uint8_t _pol1;
-        uint8_t _pol2;
+        uint8_t _rpwm;
+        uint8_t _lpwm;
 };
 
 #endif

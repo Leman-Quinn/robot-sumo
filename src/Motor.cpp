@@ -1,10 +1,10 @@
 #include "Motor.h"
 
 //---------- CONSTRUCTOR ----------//
-Motor::Motor(uint8_t pol1, uint8_t pol2):
-    _pol1(pol1),
-    _pol2(pol2){
-
+Motor::Motor(uint8_t rpwm, uint8_t lpwm):
+    _rpwm(rpwm),
+    _lpwm(lpwm){
+        
     }
 
 //---------- METHODS ----------//

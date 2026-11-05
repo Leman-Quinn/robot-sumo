@@ -7,8 +7,8 @@
 class Driver {
     public:
         //---------- CONSTRUCTOR ----------//
-        Driver(uint8_t pol1, uint8_t pol2, uint8_t pwma,
-               uint8_t pol3, uint8_t pol4, uint8_t pwmb);
+        Driver(uint8_t rpwm_a, uint8_t lpwm_a,
+               uint8_t rpwm_b, uint8_t lpwm_b);
 
         //---------- METHODS ----------//
         void begin();
@@ -25,9 +25,11 @@ class Driver {
     private:
         //---------- ATTRIBUTES ----------//
         Motor _leftMotor;
-        uint8_t _pwma;
+        uint8_t _rpwm_a;
+        uint8_t _lpwm_a;
         Motor _rightMotor;
-        uint8_t _pwmb;
+        uint8_t _rpwm_b;
+        uint8_t _lpwm_b;
 };
 
 #endif
