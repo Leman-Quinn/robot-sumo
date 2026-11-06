@@ -2,6 +2,8 @@
 #include "Robot.h"
 
 Robot robot(
+    OUT_FL, OUT_FR,
+    OUT_RL, OUT_RR,
     TRI_L, ECHO_L,
     TRI_FL, ECHO_FL,
     TRI_FR, ECHO_FR,
