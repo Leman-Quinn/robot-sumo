@@ -25,7 +25,7 @@ class Robot {
         EnemyPosition getEnemyPosition();
         void setEnemyPosition(EnemyPosition enemyPosition);
         
-        enum class State{SEARCH, SEARCH_R, SEARCH_L, ALIGN, ATTACK, EVADE_ENEMY, EVADE_LINE, COUNT};
+        enum class State{SEARCH, SEARCH_L, SEARCH_R, ALIGN, ATTACK, EVADE_ENEMY, EVADE_LINE, COUNT};
         State getState();
         void setState(State state);
 
@@ -58,15 +58,13 @@ class Robot {
         EnemyPosition _enemyPosition = EnemyPosition::NONE;
         State _state = State::SEARCH;
         Action _action = Action::BRAKE;
-        
+        StrategyStep _stratStep = StrategyStep::FORWARD;
+        unsigned long _stratClock = 0;
         UltrasonicSensor _leftUltrasonic;
         UltrasonicSensor _frontLeftUltrasonic;
         UltrasonicSensor _frontRightUltrasonic;
         UltrasonicSensor _rightUltrasonic;
         Driver _driver;
-
-        StrategyStep _stratStep = StrategyStep::FORWARD;
-        unsigned long _stratClock = 0;
         //-----------------------------------------//
         
         //---------- SENSE HELPERS ----------//

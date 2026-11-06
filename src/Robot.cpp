@@ -99,6 +99,9 @@ void Robot::act(){
         case Action::ROTATE_RIGHT:
             rotateRight(255);
             break;
+        case Action::PATROL:
+            simple_patrol();
+            break;
     }
 }
 //-----------------------------//
@@ -194,12 +197,12 @@ void Robot::updateAction(){
             setAction(Action::FORWARD);
             break;
         case State::ALIGN:
-            if (factor < -5)
+            if (factor <= -5)
                 {
                     // Align to the left
                     setAction(Action::FORWARD_LEFT);
                 }
-                else if (factor > 5)
+                else if (factor >= 5)
                 {
                     // Align to the right
                     setAction(Action::FORWARD_RIGHT);
@@ -260,7 +263,7 @@ void Robot::simple_patrol(){
     switch (_stratStep)
     {
     case StrategyStep::FORWARD:
-        _driver.forward(100);
+        forward(100);
 
         if (millis() - _stratClock >= 750){
             _stratStep = StrategyStep::ROTATE_RIGHT;
@@ -268,7 +271,7 @@ void Robot::simple_patrol(){
         }
         break;
     case StrategyStep::ROTATE_RIGHT:
-        _driver.rotateRight(100);
+        rotateRight(100);
 
         if (millis() - _stratClock >= 500){
             _stratStep = StrategyStep::FORWARD;

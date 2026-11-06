@@ -12,7 +12,7 @@ Robot robot(
 
 void setup() { 
     //---------- SERIAL (DEBUG) ----------//
-    Serial.begin(115200);
+    //Serial.begin(115200);
     robot.begin();
 }
 
