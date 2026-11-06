@@ -6,7 +6,10 @@
 constexpr float MAX_ENEMY_DISTANCE = 20;
 
 // ---------- INFRARED ----------
-
+constexpr uint8_t OUT_FL = 39;
+constexpr uint8_t OUT_FR = 36;
+constexpr uint8_t OUT_RL = 34;
+constexpr uint8_t OUT_RR = 35;
 // ---------- ULTRASONIC ----------
 // LEFT SENSOR
 constexpr uint8_t TRI_L = 32;

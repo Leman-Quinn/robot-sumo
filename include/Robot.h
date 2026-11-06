@@ -1,6 +1,7 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
+#include "InfraredSensor.h"
 #include "UltrasonicSensor.h"
 #include "Driver.h"
 
@@ -8,6 +9,8 @@ class Robot {
     public:
         //---------- CONSTRUCTOR ----------//
         Robot(
+            uint8_t out_fl, uint8_t out_fr,
+            uint8_t out_rl, uint8_t out_rr,
             uint8_t leftTrigger, uint8_t leftEcho,
             uint8_t frontLeftTrigger, uint8_t frontLeftEcho,
             uint8_t frontRightTrigger, uint8_t frontRightEcho,
@@ -18,6 +21,9 @@ class Robot {
         //---------------------------------//
         
         //---------- INTERFACES ----------//
+        enum class InfraredPosition{FRONT_LEFT, FRONT_RIGHT, REAR_LEFT, REAR_RIGHT, COUNT};
+        bool getInfrared(InfraredPosition position);
+
         enum class UltrasonicPosition {LEFT, FRONT_LEFT, FRONT_RIGHT, RIGHT, COUNT};
         float getUltrasonicDistance(UltrasonicPosition position);
 
@@ -54,22 +60,28 @@ class Robot {
         //------------------------------------------//
     private:
         //---------- PROPERTIES ----------//
+        bool _infraredPosition[static_cast<int>(InfraredPosition::COUNT)];
         float _ultrasonicDistances[static_cast<int>(UltrasonicPosition::COUNT)];
         EnemyPosition _enemyPosition = EnemyPosition::NONE;
         State _state = State::SEARCH;
         Action _action = Action::BRAKE;
         StrategyStep _stratStep = StrategyStep::FORWARD;
         unsigned long _stratClock = 0;
+        InfraredSensor _frontLeftInfrared;
+        InfraredSensor _frontRightInfrared;
+        InfraredSensor _rearLeftInfrared;
+        InfraredSensor _rearRightInfrared;
         UltrasonicSensor _leftUltrasonic;
         UltrasonicSensor _frontLeftUltrasonic;
         UltrasonicSensor _frontRightUltrasonic;
         UltrasonicSensor _rightUltrasonic;
         Driver _driver;
-        //-----------------------------------------//
+        //--------------------------------//
         
         //---------- SENSE HELPERS ----------//
         void updateUltrasonicSensors();
-        //----------------------------------------------//
+        void updateInfraredSensors();
+        //-----------------------------------//
 
         //---------- THINK HELPERS ----------//
         void updateEnemyPosition();

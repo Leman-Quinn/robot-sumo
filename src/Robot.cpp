@@ -3,6 +3,8 @@
 
 //---------- CONSTRUCTOR ----------//
 Robot::Robot(
+    uint8_t out_fl, uint8_t out_fr,
+    uint8_t out_rl, uint8_t out_rr,
     uint8_t leftTrigger, uint8_t leftEcho,
     uint8_t frontLeftTrigger, uint8_t frontLeftEcho,
     uint8_t frontRightTrigger, uint8_t frontRightEcho,
@@ -10,6 +12,10 @@ Robot::Robot(
     uint8_t rpwm_a, uint8_t lpwm_a,
     uint8_t rpwm_b, uint8_t lpwm_b
     ):
+    _frontLeftInfrared(out_fl),
+    _frontRightInfrared(out_fr),
+    _rearLeftInfrared(out_rl),
+    _rearRightInfrared(out_rr),
     _leftUltrasonic(leftTrigger, leftEcho),
     _frontLeftUltrasonic(frontLeftTrigger, frontLeftEcho),
     _frontRightUltrasonic(frontRightTrigger, frontRightEcho),
@@ -20,6 +26,10 @@ Robot::Robot(
 //---------------------------------//
 
 //---------- INTERFACES ----------//
+bool Robot::getInfrared(InfraredPosition position){
+    return _infraredPosition[static_cast<int>(position)];
+}
+
 float Robot::getUltrasonicDistance(UltrasonicPosition position){
     return _ultrasonicDistances[static_cast<int>(position)];
 }
@@ -51,6 +61,10 @@ void Robot::setAction(Action action){
 
 //---------- METHODS ----------//
 void Robot::begin(){
+    _frontLeftInfrared.begin();
+    _frontRightInfrared.begin();
+    _rearLeftInfrared.begin();
+    _rearRightInfrared.begin();
     _leftUltrasonic.begin();
     _frontLeftUltrasonic.begin();
     _frontRightUltrasonic.begin();
@@ -60,6 +74,7 @@ void Robot::begin(){
 
 void Robot::sense(){
     updateUltrasonicSensors();
+    updateInfraredSensors();
 }
 
 void Robot::think(){
@@ -116,6 +131,13 @@ void Robot::updateUltrasonicSensors(){
     delay(80);
     _ultrasonicDistances[static_cast<int>(UltrasonicPosition::RIGHT)] = _rightUltrasonic.readDistance();
     delay(80);
+}
+
+void Robot::updateInfraredSensors(){
+    _infraredPosition[static_cast<int>(InfraredPosition::FRONT_LEFT)] = _frontLeftInfrared.readSurface();
+    _infraredPosition[static_cast<int>(InfraredPosition::FRONT_RIGHT)] = _frontRightInfrared.readSurface();
+    _infraredPosition[static_cast<int>(InfraredPosition::REAR_LEFT)] = _rearLeftInfrared.readSurface();
+    _infraredPosition[static_cast<int>(InfraredPosition::REAR_RIGHT)] = _rearRightInfrared.readSurface();
 }
 
 //------- THINK HELPERS -------//
