@@ -17,11 +17,7 @@ void setup() {
 }
 
 void loop() { 
-    //robot.sense();
-    //robot.think();
-    //robot.act();
-
-    //------- DEBUGGING -------//
-    // STRAIGHT LINE AT MAX SPEED (100% PWM)
-    robot.testForward(255);
+    robot.sense();
+    robot.think();
+    robot.act();
 }

@@ -75,21 +75,21 @@ void Robot::act(){
         case Action::FORWARD:
             forward(255);
             break;
-        //case Action::FORWARD_LEFT:
-        //    forwardLeft(50);
-        //    break;
-        //case Action::FORWARD_RIGHT:
-        //    forwardRight(50);
-        //    break;
+        case Action::FORWARD_LEFT:
+            forwardLeft(100);
+            break;
+        case Action::FORWARD_RIGHT:
+            forwardRight(100);
+            break;
         case Action::BACKWARD:
             backward(255);
             break;
-        //case Action::BACKWARD_LEFT:
-        //    backwardLeft(50);
-        //    break;
-        //case Action::BACKWARD_RIGHT:
-        //    backwardRight(50);
-        //    break;
+        case Action::BACKWARD_LEFT:
+            backwardLeft(100);
+            break;
+        case Action::BACKWARD_RIGHT:
+            backwardRight(100);
+            break;
         case Action::BRAKE:
             brake();
             break;
@@ -124,11 +124,11 @@ void Robot::updateEnemyPosition(){
     float rightDistance = getUltrasonicDistance(UltrasonicPosition::RIGHT);
 
     // 2. Sets flags for potential enemy location based on max distance threshold
-    bool targetOnLeft = leftDistance < MAX_ENEMY_DISTANCE;
-    bool targetOnFrontLeft = frontLeftDistance < MAX_ENEMY_DISTANCE;
-    bool targetOnFront = (frontLeftDistance < MAX_ENEMY_DISTANCE) && (frontRightDistance < MAX_ENEMY_DISTANCE);
-    bool targetOnFrontRight = frontRightDistance < MAX_ENEMY_DISTANCE;
-    bool targetOnRight = rightDistance < MAX_ENEMY_DISTANCE;
+    bool targetOnLeft = leftDistance >= 0 && leftDistance < MAX_ENEMY_DISTANCE;
+    bool targetOnFrontLeft = frontLeftDistance >= 0 && frontLeftDistance < MAX_ENEMY_DISTANCE;
+    bool targetOnFrontRight = frontRightDistance >= 0 && frontRightDistance < MAX_ENEMY_DISTANCE;
+    bool targetOnRight = rightDistance >= 0 && rightDistance < MAX_ENEMY_DISTANCE;
+    bool targetOnFront = targetOnFrontLeft && targetOnFrontRight;
 
     // 3. Updates enemy position
     if (targetOnFront)
@@ -172,10 +172,10 @@ void Robot::updateState(){
             setState(State::ALIGN);
             break;
         case Robot::EnemyPosition::LEFT:
-            setState(State::SEARCH);
+            setState(State::SEARCH_L);
             break;
         case Robot::EnemyPosition::RIGHT:
-            setState(State::SEARCH);
+            setState(State::SEARCH_R);
             break;
         case Robot::EnemyPosition::NONE:
             setState(State::SEARCH);
@@ -205,9 +205,14 @@ void Robot::updateAction(){
                     setAction(Action::FORWARD_RIGHT);
                 }
             break;
-        case State::SEARCH:
-            // To be replaced with CUSTOM STRATEGIES
+        case State::SEARCH_R:
+            setAction(Action::ROTATE_RIGHT);
+            break;
+        case State::SEARCH_L:
             setAction(Action::ROTATE_LEFT);
+            break;
+        case State::SEARCH:
+            setAction(Action::PATROL);
             break;
     }
 }
@@ -217,29 +222,25 @@ void Robot::forward(int pwm){
     _driver.forward(pwm);
 }
 
-/*
-void Robot::forwardRight(int pwm_percentage){
-    _driver.forwardRight(pwm_percentage);
+void Robot::forwardRight(int pwm){
+    _driver.forwardRight(pwm);
 }
 
-void Robot::forwardLeft(int pwm_percentage){
-    _driver.forwardLeft(pwm_percentage);
+void Robot::forwardLeft(int pwm){
+    _driver.forwardLeft(pwm);
 }
-*/
 
 void Robot::backward(int pwm){
     _driver.backward(pwm);
 }
 
-/*
-void Robot::backwardRight(int pwm_percentage){
-    _driver.backwardRight(pwm_percentage);
+void Robot::backwardRight(int pwm){
+    _driver.backwardRight(pwm);
 }
 
-void Robot::backwardLeft(int pwm_percentage){
-    _driver.backwardLeft(pwm_percentage);
+void Robot::backwardLeft(int pwm){
+    _driver.backwardLeft(pwm);
 }
-*/
 
 void Robot::rotateRight(int pwm){
     _driver.rotateRight(pwm);
@@ -253,6 +254,30 @@ void Robot::brake(){
     _driver.brake();
 }
 //-------------------------------//
+
+//--------------- STRATEGY -----------------//
+void Robot::simple_patrol(){
+    switch (_stratStep)
+    {
+    case StrategyStep::FORWARD:
+        _driver.forward(100);
+
+        if (millis() - _stratClock >= 750){
+            _stratStep = StrategyStep::ROTATE_RIGHT;
+            _stratClock = millis();
+        }
+        break;
+    case StrategyStep::ROTATE_RIGHT:
+        _driver.rotateRight(100);
+
+        if (millis() - _stratClock >= 500){
+            _stratStep = StrategyStep::FORWARD;
+            _stratClock = millis();
+        }
+        break;
+    }
+}
+//---------------------------------------------//
 
 //------- DEBUGGING HELPERS -------//
 void Robot::testForward(int pwm){

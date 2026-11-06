@@ -25,13 +25,15 @@ class Robot {
         EnemyPosition getEnemyPosition();
         void setEnemyPosition(EnemyPosition enemyPosition);
         
-        enum class State{SEARCH, ALIGN, ATTACK, EVADE_ENEMY, EVADE_LINE, COUNT};
+        enum class State{SEARCH, SEARCH_R, SEARCH_L, ALIGN, ATTACK, EVADE_ENEMY, EVADE_LINE, COUNT};
         State getState();
         void setState(State state);
 
-        enum class Action{FORWARD, FORWARD_LEFT, FORWARD_RIGHT, BACKWARD, BACKWARD_LEFT, BACKWARD_RIGHT, BRAKE, ROTATE_LEFT, ROTATE_RIGHT};
+        enum class Action{FORWARD, FORWARD_LEFT, FORWARD_RIGHT, BACKWARD, BACKWARD_LEFT, BACKWARD_RIGHT, BRAKE, ROTATE_LEFT, ROTATE_RIGHT, PATROL, COUNT};
         Action getAction();
         void setAction(Action action);
+
+        enum class StrategyStep{FORWARD, ROTATE_RIGHT};
         //-------------------------------//
 
         //---------- METHODS ----------//
@@ -47,7 +49,9 @@ class Robot {
         void testMixedMovements(int pwm);
         //-------------------------------//
 
-
+        //--------------- STRATEGY -----------------//
+        void simple_patrol();
+        //------------------------------------------//
     private:
         //---------- PROPERTIES ----------//
         float _ultrasonicDistances[static_cast<int>(UltrasonicPosition::COUNT)];
@@ -60,6 +64,9 @@ class Robot {
         UltrasonicSensor _frontRightUltrasonic;
         UltrasonicSensor _rightUltrasonic;
         Driver _driver;
+
+        StrategyStep _stratStep = StrategyStep::FORWARD;
+        unsigned long _stratClock = 0;
         //-----------------------------------------//
         
         //---------- SENSE HELPERS ----------//
@@ -74,11 +81,11 @@ class Robot {
 
         //---------- ACT HELPERS ----------//
         void forward(int pwm);
-        //void forwardRight(int pwm_percentage);
-        //void forwardLeft(int pwm_percentage);
+        void forwardRight(int pwm);
+        void forwardLeft(int pwm);
         void backward(int pwm);
-        //void backwardRight(int pwm_percentage);
-        //void backwardLeft(int pwm_percentage);
+        void backwardRight(int pwm);
+        void backwardLeft(int pwm);
         void rotateRight(int pwm);
         void rotateLeft(int pwm);
         void brake();

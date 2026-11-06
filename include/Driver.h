@@ -14,11 +14,11 @@ class Driver {
         //---------- METHODS ----------//
         void begin();
         void forward(int pwm);
-        //void forwardRight(int pwm);
-        //void forwardLeft(int pwm);
+        void forwardRight(int pwm);
+        void forwardLeft(int pwm);
         void backward(int pwm);
-        //void backwardRight(int pwm);
-        //void backwardLeft(int pwm);
+        void backwardRight(int pwm);
+        void backwardLeft(int pwm);
         void rotateRight(int pwm);
         void rotateLeft(int pwm);
         void brake();
